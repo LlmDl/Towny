@@ -281,7 +281,7 @@ public class PlayerCacheUtil {
 		 */
 		Resident resident = null;
 		try {
-			resident = TownyUniverse.getInstance().getDataSource().getResident(player.getName());
+			resident = TownyUniverse.getInstance().getDataSource().getResident(player);
 		} catch (TownyException e) {
 			// Check if entity is a Citizens NPC
 			if (plugin.isCitizens2()) {
@@ -400,7 +400,7 @@ public class PlayerCacheUtil {
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
 
 		try {
-			playersTown = townyUniverse.getDataSource().getResident(player.getName()).getTown();
+			playersTown = townyUniverse.getDataSource().getResident(player).getTown();
 		} catch (NotRegisteredException e) {
 		}
 

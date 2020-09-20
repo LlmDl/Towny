@@ -266,6 +266,10 @@ public abstract class TownyDataSource {
 
 	abstract public Resident getResident(String name) throws NotRegisteredException;
 
+	public Resident getResident(Player player) throws NotRegisteredException {
+		return getResident(player.getName());
+	}
+
 	abstract public void removeNation(Nation nation);
 
 	abstract public boolean hasResident(String name);

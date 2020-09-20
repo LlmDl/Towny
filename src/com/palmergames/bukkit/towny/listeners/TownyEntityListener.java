@@ -146,16 +146,19 @@ public class TownyEntityListener implements Listener {
 				if (!(attacker instanceof Player) || !(defender instanceof Player)) {
 					return;
 				}
+				Player attackerPlayer = (Player) attacker;
+				Player defenderPlayer = (Player) defender; 
+				
 				TownyUniverse universe = TownyUniverse.getInstance();
 				//Cancel because one of two players has no town and should not be interfering during war.
-				if (!universe.getDataSource().getResident(attacker.getName()).hasTown() || !universe.getDataSource().getResident(defender.getName()).hasTown()){
+				if (!universe.getDataSource().getResident(attackerPlayer).hasTown() || !universe.getDataSource().getResident(defenderPlayer).hasTown()){
 					TownyMessaging.sendMessage(attacker, TownySettings.getWarAPlayerHasNoTownMsg());
 					event.setCancelled(true);
 					return;
 				}
 				try {
-					Town attackerTown = universe.getDataSource().getResident(attacker.getName()).getTown();
-					Town defenderTown = universe.getDataSource().getResident(defender.getName()).getTown();
+					Town attackerTown = universe.getDataSource().getResident(attackerPlayer).getTown();
+					Town defenderTown = universe.getDataSource().getResident(defenderPlayer).getTown();
 	
 					//Cancel because one of the two players' town has no nation and should not be interfering during war.  AND towns_are_neutral is true in the config.
 					if ((!attackerTown.hasNation() || !defenderTown.hasNation()) && TownySettings.isWarTimeTownsNeutral()) {
@@ -187,7 +190,7 @@ public class TownyEntityListener implements Listener {
 				} catch (NotRegisteredException e) {
 					//One of the players has no nation.
 				}
-				if (CombatUtil.preventFriendlyFire((Player) attacker, (Player) defender)) {
+				if (CombatUtil.preventFriendlyFire(attackerPlayer, defenderPlayer)) {
 					// Remove the projectile here so no
 					// other events can fire to cause damage
 					if (attacker instanceof Projectile)

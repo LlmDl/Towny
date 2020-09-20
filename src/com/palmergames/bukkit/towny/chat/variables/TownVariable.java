@@ -17,7 +17,7 @@ public class TownVariable extends ChatVariable {
 	@Override
 	public String parse(Player player, String message) {
 		try {
-			return TownyUniverse.getInstance().getDataSource().getResident(player.getName()).getTown().getName();
+			return TownyUniverse.getInstance().getDataSource().getResident(player).getTown().getName();
 		} catch(NotRegisteredException ignore) {
 		}
 		return "";

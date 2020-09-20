@@ -256,7 +256,7 @@ public class TownyWorldCommand extends BaseCommand implements CommandExecutor {
 //
 //				if (player != null)
 //					try {
-//						TownyUniverse.getDataSource().getResident(player.getName()).regenUndo();
+//						TownyUniverse.getDataSource().getResident(player).regenUndo();
 //					} catch (NotRegisteredException e) {
 //						// Failed to get resident
 //					}

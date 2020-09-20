@@ -153,7 +153,7 @@ public class BaseCommand implements TabCompleter{
 	 */
 	public static List<String> getTownResidentNamesOfPlayerStartingWith(Player player, String str){
 		try {
-			return NameUtil.filterByStart(NameUtil.getNames(TownyUniverse.getInstance().getDataSource().getResident(player.getName()).getTown().getResidents()), str);
+			return NameUtil.filterByStart(NameUtil.getNames(TownyUniverse.getInstance().getDataSource().getResident(player).getTown().getResidents()), str);
 		} catch (NotRegisteredException e) {
 			return Collections.emptyList();
 		}

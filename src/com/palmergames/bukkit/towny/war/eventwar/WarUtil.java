@@ -18,7 +18,7 @@ public class WarUtil {
 	public static boolean isPlayerNeutral(Player player) {
 		if (TownyAPI.getInstance().isWarTime()) {
 			try {
-				Resident resident = TownyUniverse.getInstance().getDataSource().getResident(player.getName());
+				Resident resident = TownyUniverse.getInstance().getDataSource().getResident(player);
 				if (resident.isJailed())
 					return true;
 				if (resident.hasTown())

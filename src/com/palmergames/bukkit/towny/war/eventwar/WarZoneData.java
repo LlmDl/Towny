@@ -29,7 +29,7 @@ public class WarZoneData {
 	
 	public void addAttacker (Player p) throws NotRegisteredException {
 		if (!p.isDead()){
-			Resident resident = TownyUniverse.getInstance().getDataSource().getResident(p.getName());
+			Resident resident = TownyUniverse.getInstance().getDataSource().getResident(p);
 			attackerTowns.add(resident.getTown());
 			allPlayers.add(p);
 			attackers.add(p);

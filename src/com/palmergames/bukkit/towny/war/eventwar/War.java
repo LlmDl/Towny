@@ -462,7 +462,7 @@ public class War {
 		String healString =  Colors.Gray + "[Heal](" + townBlock.getCoord().toString() + ") HP: " + hp + " (" + Colors.LightGreen + "+" + healthChange + Colors.Gray + ")";
 		TownyMessaging.sendMessageToMode(townBlock.getTown(), healString, "");
 		for (Player p : wzd.getDefenders()) {
-			if (com.palmergames.bukkit.towny.TownyUniverse.getInstance().getDataSource().getResident(p.getName()).getTown() != townBlock.getTown())
+			if (com.palmergames.bukkit.towny.TownyUniverse.getInstance().getDataSource().getResident(p).getTown() != townBlock.getTown())
 				TownyMessaging.sendMessage(p, healString);
 		}
 		launchFireworkAtPlot (townBlock, wzd.getRandomDefender(), Type.BALL, Color.LIME);
@@ -481,7 +481,7 @@ public class War {
 	private void attackPlot(TownBlock townBlock, WarZoneData wzd) throws NotRegisteredException {
 
 		Player attackerPlayer = wzd.getRandomAttacker();
-		Resident attackerResident = com.palmergames.bukkit.towny.TownyUniverse.getInstance().getDataSource().getResident(attackerPlayer.getName());
+		Resident attackerResident = com.palmergames.bukkit.towny.TownyUniverse.getInstance().getDataSource().getResident(attackerPlayer);
 		Town attacker = attackerResident.getTown();
 
 		//Health, messaging, fireworks..

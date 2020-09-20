@@ -96,7 +96,7 @@ public class TownyPerms {
 
 		if (resident == null) {
 			try {
-				resident = townyUniverse.getDataSource().getResident(player.getName());
+				resident = townyUniverse.getDataSource().getResident(player);
 			} catch (NotRegisteredException e) {
 				// failed to get resident
 				e.printStackTrace();

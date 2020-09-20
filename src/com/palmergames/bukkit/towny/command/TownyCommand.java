@@ -218,7 +218,7 @@ public class TownyCommand extends BaseCommand implements CommandExecutor {
 					}
 				} else if (split.length == 1)
 					try {
-						Resident resident = townyUniverse.getDataSource().getResident(player.getName());
+						Resident resident = townyUniverse.getDataSource().getResident(player);
 						town = resident.getTown();
 					} catch (NotRegisteredException e) {
 					}
@@ -260,7 +260,7 @@ public class TownyCommand extends BaseCommand implements CommandExecutor {
 				towny_war.clear();
 			} else if (split[0].equalsIgnoreCase("spy")) {
 				if (townyUniverse.getPermissionSource().has(player, PermissionNodes.TOWNY_CHAT_SPY.getNode())) {
-					Resident resident = townyUniverse.getDataSource().getResident(player.getName());
+					Resident resident = townyUniverse.getDataSource().getResident(player);
 					resident.toggleMode(split, true);
 				} else
 					TownyMessaging.sendErrorMsg(player, Translation.of("msg_err_command_disable"));
@@ -313,10 +313,10 @@ public class TownyCommand extends BaseCommand implements CommandExecutor {
 		String townLine;
 		for (Nation nations : nationsToSort) {
 			nationLine = Colors.Gold + "-" + nations.getName();
-			if (townyUniverse.getDataSource().getResident(player.getName()).hasNation())
-				if (townyUniverse.getDataSource().getResident(player.getName()).getTown().getNation().hasEnemy(nations))
+			if (townyUniverse.getDataSource().getResident(player).hasNation())
+				if (townyUniverse.getDataSource().getResident(player).getTown().getNation().hasEnemy(nations))
 					nationLine += Colors.Red + " (Enemy)";
-				else if (townyUniverse.getDataSource().getResident(player.getName()).getTown().getNation().hasAlly(nations))
+				else if (townyUniverse.getDataSource().getResident(player).getTown().getNation().hasAlly(nations))
 					nationLine += Colors.Green + " (Ally)";
 			output.add(nationLine);
 			for (Town towns : townsToSort) {

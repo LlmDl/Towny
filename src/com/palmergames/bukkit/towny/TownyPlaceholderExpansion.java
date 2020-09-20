@@ -112,7 +112,7 @@ public class TownyPlaceholderExpansion extends PlaceholderExpansion {
 		}
 		Resident resident;
 		try {
-			resident = TownyAPI.getInstance().getDataSource().getResident(player.getName());
+			resident = TownyAPI.getInstance().getDataSource().getResident(player);
 		} catch (NotRegisteredException e) {
 			return null;
 		}

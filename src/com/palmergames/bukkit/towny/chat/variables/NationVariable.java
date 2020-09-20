@@ -17,7 +17,7 @@ public class NationVariable extends ChatVariable {
 	@Override
 	public String parse(Player player, String message) {
 		try {
-			return TownyUniverse.getInstance().getDataSource().getResident(player.getName()).getTown().getNation().getName();
+			return TownyUniverse.getInstance().getDataSource().getResident(player).getTown().getNation().getName();
 		} catch(NotRegisteredException ignore) {
 			return "";
 		}

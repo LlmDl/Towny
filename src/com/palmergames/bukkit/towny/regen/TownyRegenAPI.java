@@ -248,7 +248,7 @@ public class TownyRegenAPI {
 //				}
 //			}
 //			
-//			TownyUniverse.getDataSource().getResident(player.getName()).addUndo(snapshot);
+//			TownyUniverse.getDataSource().getResident(player).addUndo(snapshot);
 //
 //			Bukkit.getWorld(player.getWorld().getName()).regenerateChunk(coord.getX(), coord.getZ());
 //

@@ -61,7 +61,7 @@ public class SpawnUtil {
 	public static void sendToTownySpawn(Player player, String[] split, TownyObject townyObject, String notAffordMSG, boolean outpost, boolean ignoreWarn, SpawnType spawnType) throws TownyException {
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
 
-		Resident resident = townyUniverse.getDataSource().getResident(player.getName());
+		Resident resident = townyUniverse.getDataSource().getResident(player);
 		// Test if the resident is in a teleport cooldown.
 		if (TownySettings.getSpawnCooldownTime() > 0
 				&& CooldownTimerTask.hasCooldown(resident.getName(), CooldownType.TELEPORT))

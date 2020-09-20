@@ -223,7 +223,7 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 			String world;
 
 			try {
-				resident = townyUniverse.getDataSource().getResident(player.getName());
+				resident = townyUniverse.getDataSource().getResident(player);
 				world = player.getWorld().getName();
 				//resident.getTown();
 			} catch (TownyException x) {
@@ -1327,7 +1327,7 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
 
-		resident = townyUniverse.getDataSource().getResident(player.getName());
+		resident = townyUniverse.getDataSource().getResident(player);
 		world = player.getWorld().getName();
 		
 		TownBlock townBlock = new WorldCoord(world, Coord.parseCoord(player)).getTownBlock();

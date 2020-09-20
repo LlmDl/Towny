@@ -103,7 +103,7 @@ public class InviteCommand extends BaseCommand implements CommandExecutor {
 		// /invite args[0] args[1}
 		Resident resident;
 		try {
-			resident = TownyUniverse.getInstance().getDataSource().getResident(player.getName());
+			resident = TownyUniverse.getInstance().getDataSource().getResident(player);
 		} catch (TownyException x) {
 			TownyMessaging.sendErrorMsg(player, x.getMessage());
 			return;
@@ -140,7 +140,7 @@ public class InviteCommand extends BaseCommand implements CommandExecutor {
 		Town town;
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
 		try {
-			resident = townyUniverse.getDataSource().getResident(player.getName());
+			resident = townyUniverse.getDataSource().getResident(player);
 		} catch (TownyException x) {
 			TownyMessaging.sendErrorMsg(player, x.getMessage());
 			return;
@@ -195,7 +195,7 @@ public class InviteCommand extends BaseCommand implements CommandExecutor {
 		Town town;
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
 		try {
-			resident = townyUniverse.getDataSource().getResident(player.getName());
+			resident = townyUniverse.getDataSource().getResident(player);
 		} catch (TownyException x) {
 			TownyMessaging.sendErrorMsg(player, x.getMessage());
 			return;

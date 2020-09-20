@@ -75,7 +75,7 @@ public class FlagWarCustomListener implements Listener {
 		} else {
 			playerName = player.getName();
 			try {
-				playerName = universe.getDataSource().getResident(player.getName()).getFormattedName();
+				playerName = universe.getDataSource().getResident(player).getFormattedName();
 			} catch (TownyException ignored) {
 			}
 		}
@@ -91,7 +91,7 @@ public class FlagWarCustomListener implements Listener {
 				attackingPlayer = universe.getDataSource().getResident(cell.getNameOfFlagOwner());
 				if (player != null) {
 					try {
-						defendingPlayer = universe.getDataSource().getResident(player.getName());
+						defendingPlayer = universe.getDataSource().getResident(player);
 					} catch (NotRegisteredException ignored) {
 					}
 				}

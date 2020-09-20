@@ -55,7 +55,7 @@ public class OnPlayerLogin implements Runnable {
 			 */
 			try {
 				universe.getDataSource().newResident(player.getName());
-				resident = universe.getDataSource().getResident(player.getName());
+				resident = universe.getDataSource().getResident(player);
 				
 				if (TownySettings.isShowingRegistrationMessage())				
 					TownyMessaging.sendMessage(player, Translation.of("msg_registration", player.getName()));
@@ -83,7 +83,7 @@ public class OnPlayerLogin implements Runnable {
 			 * This resident is known so fetch the data and update it.
 			 */
 			try {
-				resident = universe.getDataSource().getResident(player.getName());
+				resident = universe.getDataSource().getResident(player);
 				if (TownySettings.isUsingEssentials()) {
 					Essentials ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
 					/*

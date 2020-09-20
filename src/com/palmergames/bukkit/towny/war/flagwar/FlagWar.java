@@ -244,7 +244,7 @@ public class FlagWar {
 		TownBlock townBlock;
 
 		try {
-			attackingResident = townyUniverse.getDataSource().getResident(player.getName());
+			attackingResident = townyUniverse.getDataSource().getResident(player);
 			attackingTown = attackingResident.getTown();
 			attackingNation = attackingTown.getNation();
 		} catch (NotRegisteredException e) {

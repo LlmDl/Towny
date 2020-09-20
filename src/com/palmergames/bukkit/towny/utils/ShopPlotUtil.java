@@ -31,7 +31,7 @@ public class ShopPlotUtil {
 	public static boolean doesPlayerOwnShopPlot(Player player, Location location) {
 		boolean owner = false;
 		try {
-			owner = TownyAPI.getInstance().getTownBlock(location).getResident().equals(TownyAPI.getInstance().getDataSource().getResident(player.getName()));
+			owner = TownyAPI.getInstance().getTownBlock(location).getResident().equals(TownyAPI.getInstance().getDataSource().getResident(player));
 		} catch (NotRegisteredException e) {
 			return false;
 		} catch (NullPointerException npe) {

@@ -20,7 +20,7 @@ public class NationType extends ChatType {
 	@Override
 	public boolean canChat(Player player) {
 		try {
-			return TownyUniverse.getInstance().getDataSource().getResident(player.getName()).hasTown() && TownyUniverse.getInstance().getDataSource().getResident(player.getName()).getTown().hasNation();
+			return TownyUniverse.getInstance().getDataSource().getResident(player).hasTown() && TownyUniverse.getInstance().getDataSource().getResident(player).getTown().hasNation();
 		} catch(NotRegisteredException ignore) {
 
 		}
@@ -31,12 +31,12 @@ public class NationType extends ChatType {
 	public Collection<Player> getRecipients(Collection<Player> recipients, Player player) {
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
 		try {
-			final UUID nation = townyUniverse.getDataSource().getResident(player.getName()).getTown().getNation().getUuid();
+			final UUID nation = townyUniverse.getDataSource().getResident(player).getTown().getNation().getUuid();
 
 			Collection<Player> newRecipients = new HashSet<>();
 
 			for(Player p : recipients) {
-				if(townyUniverse.getDataSource().getResident(p.getName()).getTown().getNation().getUuid().equals(nation)) {
+				if(townyUniverse.getDataSource().getResident(p).getTown().getNation().getUuid().equals(nation)) {
 					newRecipients.add(p);
 				}
 			}

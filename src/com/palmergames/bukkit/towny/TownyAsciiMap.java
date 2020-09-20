@@ -46,7 +46,7 @@ public class TownyAsciiMap {
 		Resident resident;
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
 		try {
-			resident = townyUniverse.getDataSource().getResident(player.getName());
+			resident = townyUniverse.getDataSource().getResident(player);
 			if (resident.hasTown())
 				hasTown = true;
 		} catch (TownyException x) {

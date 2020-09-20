@@ -98,7 +98,7 @@ public class TownyEntityMonitorListener implements Listener {
 			Player defenderPlayer = (Player) defenderEntity;
 			Resident defenderResident;
 			try {
-				defenderResident = townyUniverse.getDataSource().getResident(defenderPlayer.getName());
+				defenderResident = townyUniverse.getDataSource().getResident(defenderPlayer);
 			} catch (NotRegisteredException e1) {
 				// Usually an NPC or a Bot of some kind.
 				return;
@@ -118,7 +118,7 @@ public class TownyEntityMonitorListener implements Listener {
 					if (projectile.getShooter() instanceof Player) { // Player shot a projectile.
 						attackerPlayer = (Player) projectile.getShooter();
 						try {
-							attackerResident = townyUniverse.getDataSource().getResident(attackerPlayer.getName());
+							attackerResident = townyUniverse.getDataSource().getResident(attackerPlayer);
 						} catch (NotRegisteredException e) {
 							// Usually an NPC or a Bot of some kind.
 							attackerPlayer = null;
@@ -134,7 +134,7 @@ public class TownyEntityMonitorListener implements Listener {
 					// This was a player kill
 					attackerPlayer = (Player) attackerEntity;
 					try {
-						attackerResident = townyUniverse.getDataSource().getResident(attackerPlayer.getName());
+						attackerResident = townyUniverse.getDataSource().getResident(attackerPlayer);
 					} catch (NotRegisteredException e) {
 						// Usually an NPC or a Bot of some kind.
 						attackerPlayer = null;

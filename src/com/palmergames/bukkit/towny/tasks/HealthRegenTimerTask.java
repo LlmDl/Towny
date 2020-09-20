@@ -42,7 +42,7 @@ public class HealthRegenTimerTask extends TownyTimerTask {
 				
 				TownBlock townBlock = TownyUniverse.getInstance().getTownBlock(new WorldCoord(WorldCoord.parseWorldCoord(player.getLocation())));
 				
-				if (townBlock != null && CombatUtil.isAlly(townBlock.getTown(), TownyUniverse.getInstance().getDataSource().getResident(player.getName()).getTown()))
+				if (townBlock != null && CombatUtil.isAlly(townBlock.getTown(), TownyUniverse.getInstance().getDataSource().getResident(player).getTown()))
 					if (!townBlock.getType().equals(TownBlockType.ARENA)) // only regen if not in an arena
 						incHealth(player);
 			} catch (TownyException x) {

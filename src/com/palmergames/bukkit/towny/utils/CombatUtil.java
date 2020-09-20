@@ -572,7 +572,7 @@ public class CombatUtil {
 	public boolean isEnemyTownBlock(Player player, WorldCoord worldCoord) {
 
 		try {
-			return CombatUtil.isEnemy(TownyUniverse.getInstance().getDataSource().getResident(player.getName()).getTown(), worldCoord.getTownBlock().getTown());
+			return CombatUtil.isEnemy(TownyUniverse.getInstance().getDataSource().getResident(player).getTown(), worldCoord.getTownBlock().getTown());
 		} catch (NotRegisteredException e) {
 			return false;
 		}

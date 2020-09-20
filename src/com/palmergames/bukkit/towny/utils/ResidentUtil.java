@@ -66,7 +66,7 @@ public class ResidentUtil {
 			} else if (matches.size() == 1) {
 				// Match found online
 				try {
-					Resident target = townyUniverse.getDataSource().getResident(matches.get(0).getName());
+					Resident target = townyUniverse.getDataSource().getResident(matches.get(0));
 					residents.add(target);
 				} catch (TownyException x) {
 					TownyMessaging.sendErrorMsg(sender, x.getMessage());

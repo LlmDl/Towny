@@ -206,7 +206,7 @@ public class ResidentCommand extends BaseCommand implements CommandExecutor {
 			if (split.length == 0) {
 
 				try {
-					Resident resident = townyUniverse.getDataSource().getResident(player.getName());
+					Resident resident = townyUniverse.getDataSource().getResident(player);
 					TownyMessaging.sendMessage(player, TownyFormatter.getStatus(resident, player));
 				} catch (NotRegisteredException x) {
 					throw new TownyException(Translation.of("msg_err_not_registered"));
@@ -229,7 +229,7 @@ public class ResidentCommand extends BaseCommand implements CommandExecutor {
 					throw new TownyException(Translation.of("msg_err_command_disable"));
 
 				try {
-					Resident resident = townyUniverse.getDataSource().getResident(player.getName());
+					Resident resident = townyUniverse.getDataSource().getResident(player);
 					TownyMessaging.sendMessage(player, TownyFormatter.getTaxStatus(resident));
 				} catch (NotRegisteredException x) {
 					throw new TownyException(Translation.of("msg_err_not_registered"));
@@ -254,13 +254,13 @@ public class ResidentCommand extends BaseCommand implements CommandExecutor {
 					return;
 				}
 
-				if (!townyUniverse.getDataSource().getResident(player.getName()).isJailed()) {
+				if (!townyUniverse.getDataSource().getResident(player).isJailed()) {
 					TownyMessaging.sendErrorMsg(player, Translation.of("msg_err_you_aren't currently jailed"));
 					return;
 				}
 				if (split[1].equalsIgnoreCase("paybail")) {
 					double cost = TownySettings.getBailAmount();					
-					Resident resident = townyUniverse.getDataSource().getResident(player.getName());
+					Resident resident = townyUniverse.getDataSource().getResident(player);
 					if (resident.isMayor())
 						cost = TownySettings.getBailAmountMayor();
 					if (resident.isKing())
@@ -314,7 +314,7 @@ public class ResidentCommand extends BaseCommand implements CommandExecutor {
 				if (!townyUniverse.getPermissionSource().testPermission(player, PermissionNodes.TOWNY_COMMAND_RESIDENT_SPAWN.getNode()))
 					throw new TownyException(Translation.of("msg_err_command_disable"));
 
-				Resident resident = townyUniverse.getDataSource().getResident(player.getName());
+				Resident resident = townyUniverse.getDataSource().getResident(player);
 				SpawnUtil.sendToTownySpawn(player, split, resident, Translation.of("msg_err_cant_afford_tp"), false, false, SpawnType.RESIDENT);
 
 			} else {
@@ -349,7 +349,7 @@ public class ResidentCommand extends BaseCommand implements CommandExecutor {
 		Resident resident;
 
 		try {
-			resident = townyUniverse.getDataSource().getResident(player.getName());
+			resident = townyUniverse.getDataSource().getResident(player);
 
 		} catch (NotRegisteredException e) {
 			// unknown resident
@@ -492,7 +492,7 @@ public class ResidentCommand extends BaseCommand implements CommandExecutor {
 		} else {
 			Resident resident;
 			try {
-				resident = townyUniverse.getDataSource().getResident(player.getName());
+				resident = townyUniverse.getDataSource().getResident(player);
 			} catch (TownyException x) {
 				TownyMessaging.sendErrorMsg(player, x.getMessage());
 				return;
@@ -571,7 +571,7 @@ public class ResidentCommand extends BaseCommand implements CommandExecutor {
 		} else {
 			try {
 				if (!admin)
-					resident = townyUniverse.getDataSource().getResident(player.getName());
+					resident = townyUniverse.getDataSource().getResident(player);
 			} catch (TownyException x) {
 				TownyMessaging.sendErrorMsg(player, x.getMessage());
 				return;

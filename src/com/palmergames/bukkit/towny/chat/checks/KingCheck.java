@@ -18,8 +18,8 @@ public class KingCheck extends ChatCheck {
 	public boolean runCheck(Player player, String checkString) {
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
 		try {
-			if(townyUniverse.getDataSource().getResident(player.getName()).hasNation()) {
-				return townyUniverse.getDataSource().getResident(player.getName()).getTown().getNation().isKing(townyUniverse.getDataSource().getResident(player.getName()));
+			if(townyUniverse.getDataSource().getResident(player).hasNation()) {
+				return townyUniverse.getDataSource().getResident(player).getTown().getNation().isKing(townyUniverse.getDataSource().getResident(player));
 			}
 		} catch(NotRegisteredException ignore) {
 		}

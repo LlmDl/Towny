@@ -17,7 +17,7 @@ public class TitleVariable extends ChatVariable {
 	@Override
 	public String parse(Player player, String message) {
 		try {
-			return TownyUniverse.getInstance().getDataSource().getResident(player.getName()).getTitle();
+			return TownyUniverse.getInstance().getDataSource().getResident(player).getTitle();
 		} catch(NotRegisteredException ignore) {
 		}
 		return "";

@@ -32,7 +32,7 @@ public class TownClaimEvent extends Event  {
     	super(!Bukkit.getServer().isPrimaryThread());
         this.townBlock = townBlock;
 		try {
-			this.resident = TownyUniverse.getInstance().getDataSource().getResident(player.getName());
+			this.resident = TownyUniverse.getInstance().getDataSource().getResident(player);
 		} catch (NotRegisteredException e) {
 			e.printStackTrace();
 		}
