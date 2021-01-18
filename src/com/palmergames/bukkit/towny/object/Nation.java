@@ -17,7 +17,6 @@ import com.palmergames.bukkit.towny.invites.exceptions.TooManyInvitesException;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
 import com.palmergames.bukkit.towny.permissions.TownyPerms;
 import com.palmergames.bukkit.util.BukkitTools;
-import com.palmergames.util.StringMgmt;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -628,72 +627,6 @@ public class Nation extends Government {
 	 */
 	public boolean isAlliedWith(Nation nation) {
 		return allies.contains(nation);
-	}
-
-	/**
-	 * @deprecated As of 0.96.0.0+ please use {@link EconomyAccount#getWorld()} instead.
-	 *
-	 * @return The world this resides in.
-	 */
-	@Deprecated
-	public World getBukkitWorld() {
-		if (hasCapital() && getCapital().hasWorld()) {
-			return BukkitTools.getWorld(getCapital().getHomeblockWorld().getName());
-		} else {
-			return BukkitTools.getWorlds().get(0);
-		}
-	}
-
-	/**
-	 * @deprecated As of 0.96.0.0+ please use {@link EconomyAccount#getName()} instead.
-	 *
-	 * @return The name of the economy account.
-	 */
-	@Deprecated
-	public String getEconomyName() {
-		return StringMgmt.trimMaxLength(Nation.ECONOMY_ACCOUNT_PREFIX + getName(), 32);
-	}
-	
-	/**
-	 * @deprecated as of 0.95.2.15, please use {@link EconomyAccount#getHoldingBalance()} instead.
-	 * 
-	 * @return the holding balance of the economy account.
-	 * @throws EconomyException When an economy error occurs
-	 */
-	@Deprecated
-	public double getHoldingBalance() throws EconomyException {
-		try {
-			return getAccount().getHoldingBalance();
-		} catch (NoClassDefFoundError e) {
-			e.printStackTrace();
-			throw new EconomyException("Economy error getting holdings for " + getEconomyName());
-		}
-	}
-
-	/**
-	 * @deprecated As of 0.95.1.15, please use {@link EconomyAccount#withdraw(double, String)} instead.
-	 *
-	 * @param amount value to deduct from the player's account
-	 * @param reason leger memo stating why amount is deducted
-	 * @return true if successful
-	 * @throws EconomyException if the transaction fails
-	 */
-	@Deprecated
-	public boolean pay(double amount, String reason) throws EconomyException {
-		return getAccount().withdraw(amount, reason);
-	}
-
-	/**
-	 * @deprecated As of 0.95.1.15, please use {@link EconomyAccount#collect(double, String)} instead.
-	 *
-	 * @param amount currency to collect
-	 * @param reason memo regarding transaction
-	 * @return collected or pay to server account   
-	 * @throws EconomyException if transaction fails
-	 */
-	@Deprecated
-	public boolean collect(double amount, String reason) throws EconomyException {
-		return getAccount().deposit(amount, reason);
 	}
 
 	public String getMapColorHexCode() {

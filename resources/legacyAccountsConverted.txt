@@ -1,0 +1,5 @@
+If this file doesn't exist (you delete it),
+Towny will automatically attempt to convert
+old bank accounts.
+
+99% of servers can leave this file alone.

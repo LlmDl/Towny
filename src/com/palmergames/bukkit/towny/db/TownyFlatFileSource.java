@@ -868,6 +868,7 @@ public final class TownyFlatFileSource extends TownyDatabaseHandler {
 				return false;
 			} finally {
 				saveTown(town);
+				town.setOfflinePlayer();
 			}
 			return true;
 		} else {
@@ -1033,6 +1034,7 @@ public final class TownyFlatFileSource extends TownyDatabaseHandler {
 				return false;
 			} finally {
 				saveNation(nation);
+				nation.setOfflinePlayer();
 			}
 			return true;
 		} else {

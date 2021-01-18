@@ -958,14 +958,6 @@ public abstract class TownyDatabaseHandler extends TownyDataSource {
 			}
 			town.setUUID(oldUUID);
 			town.setRegistered(oldregistration);
-			if (TownyEconomyHandler.isActive()) {
-				try {
-					town.getAccount().setName(TownySettings.getTownAccountPrefix() + town.getName());
-					town.getAccount().setBalance(townBalance, "Rename Town - Transfer to new account");
-				} catch (EconomyException e) {
-					e.printStackTrace();
-				}
-			}
 
 			for (Resident resident : toSave) {
 				saveResident(resident);
@@ -1061,14 +1053,6 @@ public abstract class TownyDatabaseHandler extends TownyDataSource {
 			nation.setName(filteredName);
 			universe.registerNation(nation);
 
-			if (TownyEconomyHandler.isActive()) {
-				try {
-					nation.getAccount().setName(TownySettings.getNationAccountPrefix() + nation.getName());
-					nation.getAccount().setBalance(nationBalance, "Rename Nation - Transfer to new account");
-				} catch (EconomyException e) {
-					e.printStackTrace();
-				}
-			}
 
 			for (Town town : toSave) {
 				saveTown(town);
@@ -1126,19 +1110,6 @@ public abstract class TownyDatabaseHandler extends TownyDataSource {
 		String oldName = resident.getName();
 		
 		try {
-			double balance = 0.0D;
-
-			// Get balance in case this a server using ico5.  
-			if(TownyEconomyHandler.getVersion().startsWith("iConomy 5") && TownyEconomyHandler.isActive()){
-				try {
-					balance = resident.getAccount().getHoldingBalance();
-					resident.getAccount().removeAccount();
-				} catch (EconomyException ignored) {
-				}				
-			}
-			// Change account name over.
-			if (TownyEconomyHandler.isActive())
-				resident.getAccount().setName(newName);
 			
 			// Remove the resident from the universe name storage.
 			universe.unregisterResident(resident);
@@ -1146,15 +1117,6 @@ public abstract class TownyDatabaseHandler extends TownyDataSource {
 			resident.setName(newName);
 			// Re-register the resident with the new name.
 			universe.registerResident(resident);
-			// Set the economy account balance in ico5 (because it doesn't use UUIDs.)
-			if (TownyEconomyHandler.getVersion().startsWith("iConomy 5") && TownyEconomyHandler.isActive()) {
-				try {
-					resident.getAccount().setName(resident.getName());
-					resident.getAccount().setBalance(balance, "Rename Player - Transfer to new account");
-				} catch (EconomyException e) {
-					e.printStackTrace();
-				}				
-			}
 			
 			// Save resident with new name.
 			saveResident(resident);

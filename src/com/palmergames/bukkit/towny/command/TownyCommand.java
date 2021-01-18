@@ -492,6 +492,11 @@ public class TownyCommand extends BaseCommand implements CommandExecutor {
 
 		if (plugins > 0)
 			output.add(townyPlugins + Colors.Gold + "]");
+		
+		if (TownyEconomyHandler.isActive()) {
+			output.add("Towny-Server Balance: " + TownyEconomyHandler.getFormattedBalance(TownyEconomyHandler.getBalance(TownyEconomyHandler.getUUIDServerAccount(), Bukkit.getWorlds().get(0))));
+			output.add("War-Chest Balance   : " + TownyEconomyHandler.getFormattedBalance(TownyEconomyHandler.getBalance(TownyEconomyHandler.getUUIDWarChestAccount(), Bukkit.getWorlds().get(0))));
+		}
 		return output;
 	}
 

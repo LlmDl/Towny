@@ -49,12 +49,12 @@ public class TownyPreTransactionEvent extends Event implements Cancellable {
 	public int getNewBalance() {
 		switch (transaction.getType()) {
 			case ADD:
-				return (int) (TownyEconomyHandler.getBalance(transaction.getPlayer().getName(),
-					transaction.getPlayer().getWorld())
+				return (int) (TownyEconomyHandler.getBalance(transaction.getUUID(),
+					Bukkit.getPlayer(transaction.getUUID()).getWorld())
 					+ transaction.getAmount());
 			case SUBTRACT:
-				return (int) (TownyEconomyHandler.getBalance(transaction.getPlayer().getName(),
-					transaction.getPlayer().getWorld())
+				return (int) (TownyEconomyHandler.getBalance(transaction.getUUID(),
+					Bukkit.getPlayer(transaction.getUUID()).getWorld())
 					- transaction.getAmount());
 			default:
 				break;

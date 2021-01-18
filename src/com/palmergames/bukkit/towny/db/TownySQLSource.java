@@ -1124,6 +1124,8 @@ public final class TownySQLSource extends TownyDatabaseHandler {
 			town.setNeutral(rs.getBoolean("neutral"));
 
 			town.setDebtBalance(rs.getFloat("debtBalance"));
+			
+			town.setOfflinePlayer();
 
 			return true;
 		} catch (SQLException e) {
@@ -1297,6 +1299,8 @@ public final class TownySQLSource extends TownyDatabaseHandler {
 			} catch (SQLException ignored) {
 			}
 
+			nation.setOfflinePlayer();
+			
 			return true;
 		} catch (SQLException e) {
 			TownyMessaging.sendErrorMsg("SQL: Load Nation " + name + " SQL Error - " + e.getMessage());

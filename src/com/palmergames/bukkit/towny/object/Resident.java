@@ -61,7 +61,7 @@ public class Resident extends TownyObject implements InviteReceiver, EconomyHand
 	private final List<String> modes = new ArrayList<>();
 	private transient Confirmation confirmation;
 	private final transient List<Invite> receivedInvites = new ArrayList<>();
-	private transient EconomyAccount account = new EconomyAccount(getName());
+	private transient EconomyAccount account = null;
 
 	private final List<String> townRanks = new ArrayList<>();
 	private final List<String> nationRanks = new ArrayList<>();
@@ -789,7 +789,6 @@ public class Resident extends TownyObject implements InviteReceiver, EconomyHand
 	public Account getAccount() {
 		if (account == null) {
 
-			String accountName = StringMgmt.trimMaxLength(getName(), 32);
 			World world;
 
 			Player player = getPlayer();
@@ -798,8 +797,7 @@ public class Resident extends TownyObject implements InviteReceiver, EconomyHand
 			} else {
 				world = BukkitTools.getWorlds().get(0);
 			}
-
-			account = new EconomyAccount(accountName, world);
+			account = new EconomyAccount(getUUID(), world);
 		}
 		
 		return account;

@@ -2,8 +2,10 @@ package com.palmergames.bukkit.towny.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import com.palmergames.bukkit.config.ConfigNodes;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
@@ -47,7 +49,7 @@ public class MoneyUtil {
 		try {
 			commonTests(amount, resident, town, player.getLocation(), false, true);
 			
-			Transaction transaction = new Transaction(TransactionType.WITHDRAW, player, amount);
+			Transaction transaction = new Transaction(TransactionType.WITHDRAW, player.getUniqueId(), amount);
 			
 			TownPreTransactionEvent preEvent = new TownPreTransactionEvent(town, transaction);
 			BukkitTools.getPluginManager().callEvent(preEvent);
@@ -71,7 +73,7 @@ public class MoneyUtil {
 		try {
 			commonTests(amount, resident, town, player.getLocation(), false, false);
 
-			Transaction transaction = new Transaction(TransactionType.DEPOSIT, player, amount);
+			Transaction transaction = new Transaction(TransactionType.DEPOSIT, player.getUniqueId(), amount);
 			
 			TownPreTransactionEvent preEvent = new TownPreTransactionEvent(town, transaction);
 			BukkitTools.getPluginManager().callEvent(preEvent);
@@ -101,7 +103,7 @@ public class MoneyUtil {
 		try {
 			commonTests(amount, resident, nation.getCapital(), player.getLocation(), true, true);
 
-			Transaction transaction = new Transaction(TransactionType.WITHDRAW, player, amount);
+			Transaction transaction = new Transaction(TransactionType.WITHDRAW, player.getUniqueId(), amount);
 			
 			NationPreTransactionEvent preEvent = new NationPreTransactionEvent(nation, transaction);
 			BukkitTools.getPluginManager().callEvent(preEvent);
@@ -125,7 +127,7 @@ public class MoneyUtil {
 		try {
 			commonTests(amount, resident, nation.getCapital(), player.getLocation(), true, false);
 
-			Transaction transaction = new Transaction(TransactionType.DEPOSIT, player, amount);
+			Transaction transaction = new Transaction(TransactionType.DEPOSIT, player.getUniqueId(), amount);
 			
 			NationPreTransactionEvent preEvent = new NationPreTransactionEvent(nation, transaction);
 			BukkitTools.getPluginManager().callEvent(preEvent);
@@ -216,6 +218,7 @@ public class MoneyUtil {
 	/**
 	 * Will attempt to set a town's debtBalance if their old DebtAccount is above 0 and exists.
 	 */
+	@SuppressWarnings("deprecation")
 	public static void convertLegacyDebtAccounts() {
 		for (Town town : TownyUniverse.getInstance().getTowns()) {
 			final String name = "[DEBT]-" + town.getName();
@@ -232,5 +235,66 @@ public class MoneyUtil {
 			}
 		}
 		Towny.getPlugin().saveResource("debtAccountsConverted.txt", false);
+	}
+	
+	@SuppressWarnings("deprecation")
+	public static void convertLegacyBankAccounts() {
+		World world;
+		//Convert Town accounts to use OfflinePlayer/UUID.
+		for (Town town : TownyUniverse.getInstance().getTowns()) {
+			world = town.getWorld();
+			double balance = TownyEconomyHandler.getBalance(TownySettings.getTownAccountPrefix() + town.getName(), world);
+			if (balance == 0)
+				continue;
+			
+			if (!TownySettings.isEconomyAsync()) {
+				TownyEconomyHandler.setBalance(town, balance, world);
+				TownyEconomyHandler.removeAccount(TownySettings.getTownAccountPrefix() + town.getName());
+			} else {
+				final double finalBal = balance;
+				final World finalWorld = world;
+				Bukkit.getScheduler().runTaskAsynchronously(Towny.getPlugin(), () -> {
+					TownyEconomyHandler.setBalance(town, finalBal, finalWorld);
+					TownyEconomyHandler.removeAccount(TownySettings.getTownAccountPrefix() + town.getName());
+				});
+			}
+			System.out.println("Town account "+ town.getName()+" converted with balance of " + balance);
+		}
+
+		//Convert Nation accounts to use OfflinePlayer/UUID.
+		for (Nation nation : TownyUniverse.getInstance().getNations()) {
+			world = nation.getWorld();
+			double balance = TownyEconomyHandler.getBalance(TownySettings.getNationAccountPrefix() + nation.getName(), world);
+			if (balance == 0)
+				continue;
+
+			if (!TownySettings.isEconomyAsync()) {
+				TownyEconomyHandler.setBalance(nation, balance, world);
+				TownyEconomyHandler.removeAccount(TownySettings.getNationAccountPrefix() + nation.getName());
+			} else {
+				final double finalBal = balance;
+				final World finalWorld = world;
+				Bukkit.getScheduler().runTaskAsynchronously(Towny.getPlugin(), () -> {
+					TownyEconomyHandler.setBalance(nation, finalBal, finalWorld);
+					TownyEconomyHandler.removeAccount(TownySettings.getTownAccountPrefix() + nation.getName());
+				});
+			}
+			System.out.println("Nation account "+ nation.getName()+" converted with balance of " + balance);
+		}
+		
+		// Convert WarSpoilsAccount
+		world = Bukkit.getWorlds().get(0);
+		double balance = TownyEconomyHandler.getBalance("towny-war-chest", world);
+		TownyEconomyHandler.setWarSpoilsAccountBalance(balance, world);
+		TownyEconomyHandler.removeAccount("towny-war-chest");
+		System.out.println("Towny-War-Chest converted with balance of " + balance);
+		
+		// Convert ServerAccount
+		balance = TownyEconomyHandler.getBalance(TownySettings.getString(ConfigNodes.ECO_CLOSED_ECONOMY_SERVER_ACCOUNT), world);
+		TownyEconomyHandler.setServerAccountBalance(balance, world);
+		TownyEconomyHandler.removeAccount(TownySettings.getString(ConfigNodes.ECO_CLOSED_ECONOMY_SERVER_ACCOUNT));
+		System.out.println("Towny-Server-Account converted with balance of " + balance);
+		
+		Towny.getPlugin().saveResource("legacyAccountsConverted.txt", false);		
 	}
 }

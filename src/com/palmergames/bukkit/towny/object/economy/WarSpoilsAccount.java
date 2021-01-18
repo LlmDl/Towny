@@ -8,9 +8,9 @@ import com.palmergames.bukkit.towny.TownyEconomyHandler;
 /**
  * For internal use only.
  */
-public class TownyServerAccount extends Account {
-	public TownyServerAccount() {
-		super(TownyEconomyHandler.getUUIDServerAccount());
+public class WarSpoilsAccount extends Account {
+	public WarSpoilsAccount() {
+		super(TownyEconomyHandler.getUUIDWarChestAccount());
 	}
 
 	@Override
@@ -25,11 +25,11 @@ public class TownyServerAccount extends Account {
 
 	@Override
 	public String getName() {
-		return "towny-server";
+		return "towny-war-chest";
 	}
 	
 	@SuppressWarnings("deprecation")
 	public static OfflinePlayer getOfflinePlayer() {
-		return Bukkit.getOfflinePlayer(TownyEconomyHandler.getUUIDServerAccount().toString());
+		return Bukkit.getOfflinePlayer(TownyEconomyHandler.getUUIDWarChestAccount().toString());
 	}
 }

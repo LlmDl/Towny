@@ -1,15 +1,15 @@
 package com.palmergames.bukkit.towny.object;
 
-import org.bukkit.entity.Player;
+import java.util.UUID;
 
 public class Transaction {
 	private final TransactionType type;
-	private final Player player;
+	private final UUID uuid;
 	private final double amount;
 	
-	public Transaction(TransactionType type, Player player, double amount) {
+	public Transaction(TransactionType type, UUID uuid, double amount) {
 		this.type = type;
-		this.player = player;
+		this.uuid = uuid;
 		this.amount = amount;
 	}
 
@@ -17,10 +17,10 @@ public class Transaction {
 		return type;
 	}
 
-	public Player getPlayer() {
-		return player;
+	public UUID getUUID() {
+		return uuid;
 	}
-
+	
 	public double getAmount() {
 		return amount;
 	}

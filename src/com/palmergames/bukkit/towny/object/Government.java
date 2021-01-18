@@ -1,5 +1,6 @@
 package com.palmergames.bukkit.towny.object;
 
+import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -14,9 +15,9 @@ import com.palmergames.bukkit.towny.object.economy.BankEconomyHandler;
 import com.palmergames.bukkit.towny.object.economy.BankAccount;
 import com.palmergames.bukkit.towny.object.economy.GovernmentAccountAuditor;
 import com.palmergames.bukkit.util.BookFactory;
-import com.palmergames.util.StringMgmt;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -44,6 +45,7 @@ public abstract class Government extends TownyObject implements BankEconomyHandl
 	private boolean isPublic = false;
 	private boolean isOpen = false;
 	private boolean isNeutral = false;
+	private OfflinePlayer offlinePlayer;
 	private long registered;
 	private double spawnCost = TownySettings.getSpawnTravelCost();
 	protected double taxes;
@@ -277,9 +279,8 @@ public abstract class Government extends TownyObject implements BankEconomyHandl
 	@Override
 	public BankAccount getAccount() {
 		if (account == null) {
-			String accountName = StringMgmt.trimMaxLength(getBankAccountPrefix() + getName(), 32);
 			World world = getWorld();
-			account = new BankAccount(accountName, world, getBankCap());
+			account = new BankAccount(getUUID(), world, getBankCap(), this);
 			account.setAuditor(accountAuditor);
 		}
 
@@ -346,5 +347,16 @@ public abstract class Government extends TownyObject implements BankEconomyHandl
 		}
 
 		player.openBook(BookFactory.makeBook("Bank History", getName(), pages));
+	}
+
+	public OfflinePlayer getOfflinePlayer() {
+		setOfflinePlayer();
+        return this.offlinePlayer;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void setOfflinePlayer() {
+		if (this.offlinePlayer == null)
+			Bukkit.getScheduler().runTaskAsynchronously(Towny.getPlugin(), () -> this.offlinePlayer = Bukkit.getOfflinePlayer(getUUID().toString()));
 	}
 }

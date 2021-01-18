@@ -301,6 +301,10 @@ public class Towny extends JavaPlugin {
 		        File f = new File(TownyUniverse.getInstance().getRootFolder(), "debtAccountsConverted.txt");                   // For a short time Towny stored debt accounts in the server's
 		        if (!f.exists())                                                                                               // economy plugin. This practice had to end, being replaced 
 		        	Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> MoneyUtil.convertLegacyDebtAccounts(), 600l); // with the debtBalance which is stored in the Town object.
+				
+		        f = new File(TownyUniverse.getInstance().getRootFolder(), "legacyAccountsConverted.txt");
+		        if (!f.exists())
+		        	Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> MoneyUtil.convertLegacyBankAccounts(), 600l);
 					
 			} else {
 				ecowarn = "Warning: No compatible Economy plugins found. Install Vault.jar or Reserve.jar with any of the supported eco systems. If you do not want an economy to be used, set using_economy: false in your Towny config.yml.";

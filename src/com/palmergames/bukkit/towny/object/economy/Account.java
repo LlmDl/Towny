@@ -7,12 +7,12 @@ import com.palmergames.bukkit.towny.exceptions.EconomyException;
 import com.palmergames.bukkit.towny.object.EconomyAccount;
 import com.palmergames.bukkit.towny.object.EconomyHandler;
 import com.palmergames.bukkit.towny.object.Nameable;
-import com.palmergames.bukkit.util.BukkitTools;
 import org.bukkit.World;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Used to facilitate transactions regarding money, 
@@ -27,16 +27,16 @@ public abstract class Account implements Nameable {
 	private final List<AccountObserver> observers = new ArrayList<>();
 	private AccountAuditor auditor;
 	
-	String name;
+	protected UUID uuid;
 	World world;
 	
-	public Account(String name) {
-		this.name = name;
+	public Account(UUID uuid) {
+		this.uuid = uuid;
 		observers.add(GLOBAL_OBSERVER);
 	}
 	
-	public Account(String name, World world) {
-		this.name = name;
+	public Account(UUID uuid, World world) {
+		this.uuid = uuid;
 		this.world = world;
 		
 		// ALL account transactions will route auditing data through this
@@ -102,18 +102,6 @@ public abstract class Account implements Nameable {
 	public boolean payTo(double amount, EconomyHandler collector, String reason) throws EconomyException {
 		return payTo(amount, collector.getAccount(), reason);
 	}
-	
-	protected boolean payToServer(double amount, String reason) throws EconomyException {
-		
-		// Put it back into the server.
-		return TownyEconomyHandler.addToServer(amount, getBukkitWorld());
-	}
-	
-	protected boolean payFromServer(double amount, String reason) throws EconomyException {
-		
-		// Remove it from the server economy.
-		return TownyEconomyHandler.subtractFromServer(amount, getBukkitWorld());
-	}
 
 	/**
 	 * Pays another account the specified funds.
@@ -132,14 +120,17 @@ public abstract class Account implements Nameable {
 
 		return withdraw(amount, reason) && collector.deposit(amount, reason);
 	}
+	
+	protected boolean payToServer(double amount, String reason) throws EconomyException {
 
-	/**
-	 * Fetch the current world for this object
-	 *
-	 * @return Bukkit world for the object
-	 */
-	public World getBukkitWorld() {
-		return BukkitTools.getWorlds().get(0);
+		// Put it back into the server.
+		return TownyEconomyHandler.addToServer(amount, world);
+	}
+	
+	protected boolean payFromServer(double amount, String reason) throws EconomyException {
+		
+		// Remove it from the server economy.
+		return TownyEconomyHandler.subtractFromServer(amount, world);
 	}
 
 	/**
@@ -174,10 +165,10 @@ public abstract class Account implements Nameable {
 	 */
 	public double getHoldingBalance() throws EconomyException {
 		try {
-			return TownyEconomyHandler.getBalance(getName(), getBukkitWorld());
+			return TownyEconomyHandler.getBalance(uuid, world);
 		} catch (NoClassDefFoundError e) {
 			e.printStackTrace();
-			throw new EconomyException("Economy error getting holdings for " + getName());
+			throw new EconomyException("Economy error getting holdings for " + uuid);
 		}
 	}
 
@@ -189,7 +180,7 @@ public abstract class Account implements Nameable {
 	 * @throws EconomyException if failure
 	 */
 	public boolean canPayFromHoldings(double amount) throws EconomyException {
-		return TownyEconomyHandler.hasEnough(getName(), amount, getBukkitWorld());
+		return TownyEconomyHandler.hasEnough(uuid, amount, world);
 	}
 
 	/**
@@ -209,18 +200,13 @@ public abstract class Account implements Nameable {
 	 * Attempt to delete the economy account.
 	 */
 	public void removeAccount() {
-		TownyEconomyHandler.removeAccount(getName());
+		TownyEconomyHandler.removeAccount(uuid);
 	}
 
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	/*
+	 * Auditors and Observers
+	 */
+	
 	/**
 	 * Gets the observers of this account.
 	 * 
@@ -282,7 +268,9 @@ public abstract class Account implements Nameable {
 		addObserver(auditor);
 	}
 	
-	// Legacy Compatibility Methods.
+	/*
+	 *  Legacy Compatibility Methods.
+	 */
 	
 	/**
 	 * @deprecated As of 0.96.1.11, use {@link #deposit(double, String)} instead.
