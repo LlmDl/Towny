@@ -27,7 +27,7 @@ public class FlagWarEntityListener implements Listener {
 			/*
 			 * Defending player is in a warzone, not an ally, allow the damage.
 			 */
-			if (event.getTownBlock().getWorld().isWarZone(Coord.parseCoord(event.getEntity())) && !CombatUtil.isAlly(event.getAttackingPlayer().getName(), event.getVictimPlayer().getName()))
+			if (event.getTownBlock().getWorld().isFlagWarZone(Coord.parseCoord(event.getEntity())) && !CombatUtil.isAlly(event.getAttackingPlayer().getName(), event.getVictimPlayer().getName()))
 				event.setCancelled(false);
 		}
 	}

@@ -586,6 +586,24 @@ public class CombatUtil {
 			return true;
 		}
 	}
+	
+	/**
+	 * Test if all the listed residents are friends
+	 * 
+	 * @param possibleFriends - List of Residents (List&lt;Resident&gt;)
+	 * @return true if they are all friends
+	 */
+	public static boolean areAllFriends(List<Resident> possibleFriends) {
+
+		if (possibleFriends.size() <= 1)
+			return true;
+		else {
+			for (int i = 0; i < possibleFriends.size() - 1; i++)
+				if (!possibleFriends.get(i).hasFriend(possibleFriends.get(i + 1)))
+					return false;
+			return true;
+		}
+	}
 
 	/**
 	 * Is resident b an enemy of resident a?

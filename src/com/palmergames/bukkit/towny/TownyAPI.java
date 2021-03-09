@@ -469,7 +469,7 @@ public class TownyAPI {
      * @return true if the server is in war-time.
      */
     public boolean isWarTime() {
-        return townyUniverse.getWarEvent() != null && townyUniverse.getWarEvent().isWarTime();
+        return townyUniverse.isWarTime();
     }
     
     /**
@@ -502,11 +502,6 @@ public class TownyAPI {
 			(long) TownySettings.getTeleportWarmupTime() * 20);
     }
     
-    public void clearWarEvent() {
-        TownyUniverse townyUniverse = TownyUniverse.getInstance();
-        townyUniverse.getWarEvent().cancelTasks(BukkitTools.getScheduler());
-        townyUniverse.setWarEvent(null);
-    }
     public void requestTeleport(Player player, Location spawnLoc) {
     	Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
     	

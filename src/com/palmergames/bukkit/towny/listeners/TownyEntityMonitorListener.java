@@ -10,7 +10,6 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.player.PlayerKilledPlayerEvent;
 import com.palmergames.bukkit.towny.exceptions.EconomyException;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
-import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
@@ -137,10 +136,8 @@ public class TownyEntityMonitorListener implements Listener {
 			 * 
 			 * - Fire PlayerKilledPlayerEvent.
 			 * 
-			 * TODO: Move war-related things onto listeners for the PlayerKilledPlayerEvent.
 			 * - charge death payment,
 			 * - check for jailing attacking residents,
-			 * - award wartime death points.
 			 */
 			if (attackerPlayer != null) {
 				PlayerKilledPlayerEvent deathEvent = new PlayerKilledPlayerEvent(attackerPlayer, defenderPlayer, attackerResident, defenderResident, defenderPlayer.getLocation(), event);
@@ -148,8 +145,7 @@ public class TownyEntityMonitorListener implements Listener {
 
 				deathPayment(attackerPlayer, defenderPlayer, attackerResident, defenderResident);			
 				isJailingAttackers(attackerPlayer, defenderPlayer, attackerResident, defenderResident);
-				if (TownyAPI.getInstance().isWarTime())
-					wartimeDeathPoints(attackerPlayer, defenderPlayer, attackerResident, defenderResident);
+
 				
 			/*
 			 * Player has died from an entity but not a player & death price is not PVP only.
@@ -168,45 +164,6 @@ public class TownyEntityMonitorListener implements Listener {
 		}
 	}
 
-	private void wartimeDeathPoints(Player attackerPlayer, Player defenderPlayer, Resident attackerResident, Resident defenderResident) {
-
-		if (attackerPlayer != null && defenderPlayer != null && TownyAPI.getInstance().isWarTime())
-			try {
-				if (CombatUtil.isAlly(attackerPlayer.getName(), defenderPlayer.getName()))
-					return;
-
-				if (attackerResident.hasTown() && War.isWarringTown(attackerResident.getTown()) && defenderResident.hasTown() && War.isWarringTown(defenderResident.getTown())){
-					if (TownySettings.isRemovingOnMonarchDeath())
-						monarchDeath(attackerPlayer, defenderPlayer, attackerResident, defenderResident);
-
-					if (TownySettings.getWarPointsForKill() > 0){
-						TownyUniverse.getInstance().getWarEvent().townScored(defenderResident.getTown(), attackerResident.getTown(), defenderPlayer, attackerPlayer, TownySettings.getWarPointsForKill());
-					}
-				}
-			} catch (NotRegisteredException e) {
-			}
-	}
-
-	private void monarchDeath(Player attackerPlayer, Player defenderPlayer, Resident attackerResident, Resident defenderResident) {
-
-		War warEvent = TownyUniverse.getInstance().getWarEvent();
-		try {
-
-			Nation defenderNation = defenderResident.getTown().getNation();
-			Town defenderTown = defenderResident.getTown();
-			if (warEvent.isWarringNation(defenderNation) && defenderResident.isKing()){
-				TownyMessaging.sendGlobalMessage(Translation.of("MSG_WAR_KING_KILLED", defenderNation.getName()));
-				if (attackerResident != null)
-					warEvent.remove(attackerResident.getTown(), defenderNation);
-			}else if (warEvent.isWarringNation(defenderNation) && defenderResident.isMayor()) {
-				TownyMessaging.sendGlobalMessage(Translation.of("MSG_WAR_MAYOR_KILLED", defenderTown.getName()));
-				if (attackerResident != null)
-					warEvent.remove(attackerResident.getTown(), defenderResident.getTown());
-			}
-		} catch (NotRegisteredException e) {
-		}
-	}
-	
 	public void deathPayment(Player defenderPlayer, Resident defenderResident) throws NotRegisteredException {
 
 		if (!TownyEconomyHandler.isActive())
@@ -324,6 +281,7 @@ public class TownyEntityMonitorListener implements Listener {
 			return;
 
 		if (attackerPlayer != null && TownyAPI.getInstance().isWarTime() && TownySettings.getWartimeDeathPrice() > 0 ) {
+			War war = TownyUniverse.getInstance().getWarEvent(attackerPlayer);
 			try {
 
 				double price = TownySettings.getWartimeDeathPrice();
@@ -351,10 +309,8 @@ public class TownyEntityMonitorListener implements Listener {
 						// Town doesn't have enough funds.
 						townPrice = town.getAccount().getHoldingBalance();
 						try {
-							TownyUniverse.getInstance().getWarEvent().remove(attackerResident.getTown(), town);
-						} catch (NotRegisteredException e) {
-							TownyUniverse.getInstance().getWarEvent().remove(town);
-						}
+							war.getWarZoneManager().remove(town, attackerResident.getTown());
+						} catch (NotRegisteredException ignored) {}
 					} else if (!TownySettings.isEcoClosedEconomyEnabled()){
 						TownyMessaging.sendPrefixedTownMessage(town, Translation.of("msg_player_couldnt_pay_player_town_bank_paying_instead", defenderResident.getName(), attackerResident.getName(), townPrice));
 						town.getAccount().payTo(townPrice, attackerResident, String.format("Death Payment (War) (%s couldn't pay)", defenderResident.getName()));
@@ -501,7 +457,7 @@ public class TownyEntityMonitorListener implements Listener {
 						for (Location jailSpawn : attackerTown.getAllJailSpawns()) {
 							jailBlock = TownyAPI.getInstance().getTownBlock(jailSpawn);
 
-							if (War.isWarZone(jailBlock.getWorldCoord())) {
+							if (TownyUniverse.getInstance().hasWarEvent(jailBlock)) {
 								defenderResident.setJailed(index, attackerTown);
 								TownyMessaging.sendTitleMessageToResident(defenderResident, "You have been jailed", "Run to the wilderness or wait for a jailbreak.");
 								return;
@@ -550,7 +506,7 @@ public class TownyEntityMonitorListener implements Listener {
 				Integer index = 1;
 				for (Location jailSpawn : town.getAllJailSpawns()) {
 					jailBlock = TownyAPI.getInstance().getTownBlock(jailSpawn);
-					if (jailBlock != null && War.isWarZone(jailBlock.getWorldCoord())) {
+					if (jailBlock != null && TownyUniverse.getInstance().hasWarEvent(jailBlock)) {
 						defenderResident.setJailed(index, town);
 						TownyMessaging.sendTitleMessageToResident(defenderResident, "You have been jailed", "Run to the wilderness or wait for a jailbreak.");
 						return;

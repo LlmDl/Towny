@@ -1,4 +1,4 @@
-package com.palmergames.bukkit.towny.war.eventwar;
+package com.palmergames.bukkit.towny.war.eventwar.tasks;
 
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -11,6 +11,8 @@ import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.WorldCoord;
 import com.palmergames.bukkit.towny.tasks.TownyTimerTask;
 import com.palmergames.bukkit.towny.utils.CombatUtil;
+import com.palmergames.bukkit.towny.war.eventwar.War;
+import com.palmergames.bukkit.towny.war.eventwar.WarZoneData;
 
 import org.bukkit.entity.Player;
 
@@ -18,12 +20,12 @@ import java.util.Hashtable;
 
 public class WarTimerTask extends TownyTimerTask {
 
-	private War warEvent;
+	private War war;
 
 	public WarTimerTask(Towny plugin, War warEvent) {
 
 		super(plugin);
-		this.warEvent = warEvent;
+		this.war = warEvent;
 	}
 
 	@SuppressWarnings("static-access")
@@ -41,20 +43,20 @@ public class WarTimerTask extends TownyTimerTask {
 
 		int numPlayers = 0;
 		Hashtable<TownBlock, WarZoneData> plotList = new Hashtable<>();
-		for (Player player : this.warEvent.getWarParticipants().getOnlineWarriors()) {
+		for (Player player : war.getWarParticipants().getOnlineWarriors()) {
 			if (player == null || player.isFlying()) {
-				this.warEvent.getWarParticipants().removeOnlineWarrior(player);
+				war.getWarParticipants().removeOnlineWarrior(player);
 				continue;
 			}
 			numPlayers += 1;
 			TownyMessaging.sendDebugMsg("[War] " + player.getName() + ": ");
 			try {
 				Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-				if (resident == null || !resident.hasTown() || !warEvent.getWarParticipants().has(resident.getTown()))
+				if (resident == null || !resident.hasTown() || !war.getWarParticipants().has(resident.getTown()))
 					continue;
 
 				WorldCoord worldCoord = plugin.getCache(player).getLastTownBlock();
-				if (!warEvent.getWarZoneManager().isWarZone(worldCoord))
+				if (!war.getWarZoneManager().isWarZone(worldCoord))
 					continue;
 				TownyMessaging.sendDebugMsg("[War]   warZone");
 				if (player.getLocation().getBlockY() < TownySettings.getMinWarHeight())
@@ -83,7 +85,7 @@ public class WarTimerTask extends TownyTimerTask {
 					continue;
 
 				boolean edgesOnly = TownySettings.getOnlyAttackEdgesInWar();
-				if (edgesOnly && !isOnEdgeOfTown(townBlock, worldCoord, warEvent))
+				if (edgesOnly && !isOnEdgeOfTown(townBlock, worldCoord, war))
 					continue;
 				if (edgesOnly)
 					TownyMessaging.sendDebugMsg("[War]   onEdge");
@@ -105,7 +107,7 @@ public class WarTimerTask extends TownyTimerTask {
 		//Send health updates
 		for (TownBlock tb : plotList.keySet()) {
 			try {
-				warEvent.getWarZoneManager().updateWarZone(tb, plotList.get(tb));
+				war.getWarZoneManager().updateWarZone(tb, plotList.get(tb));
 			} catch (NotRegisteredException e) {
 				TownyMessaging.sendDebugMsg("[War]   WarZone Update Failed");
 			}

@@ -21,8 +21,6 @@ import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.WorldCoord;
 import com.palmergames.bukkit.towny.permissions.PermissionNodes;
 import com.palmergames.bukkit.towny.regen.TownyRegenAPI;
-import com.palmergames.bukkit.towny.war.eventwar.War;
-
 import net.citizensnpcs.api.CitizensAPI;
 
 import org.bukkit.Location;
@@ -355,7 +353,7 @@ public class PlayerCacheUtil {
 				if (CombatUtil.isAlly(town, resident.getTown()))
 					return TownBlockStatus.TOWN_ALLY;
 				else if (CombatUtil.isEnemy(resident.getTown(), town)) {
-					if (TownyAPI.getInstance().isWarTime() && townBlock.isWarZone() || War.isWarZone(townBlock.getWorldCoord()))
+					if (TownyAPI.getInstance().isWarTime() && townBlock.isWarZone() || TownyUniverse.getInstance().hasWarEvent(townBlock))
 						return TownBlockStatus.WARZONE;
 					else
 						return TownBlockStatus.ENEMY;

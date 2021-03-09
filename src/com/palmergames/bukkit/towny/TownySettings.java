@@ -1632,6 +1632,11 @@ public class TownySettings {
 		return getBoolean(ConfigNodes.WAR_EVENT_WINNER_TAKES_OWNERSHIP_OF_TOWN);
 	}
 	
+	public static boolean getWarEventWinnerTakesOwnershipOfTownsExcludesCapitals() {
+		
+		return getBoolean(ConfigNodes.WAR_EVENT_WINNER_TAKES_OWNERSHIP_OF_TOWNS_EXCLUDES_CAPITALS);
+	}
+	
 	public static int getWarEventConquerTime() {
 		
 		return getInt(ConfigNodes.WAR_EVENT_CONQUER_TIME);

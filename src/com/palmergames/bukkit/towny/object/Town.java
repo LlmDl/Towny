@@ -63,6 +63,7 @@ public class Town extends Government implements TownBlockOwner {
 	private final TownyPermission permissions = new TownyPermission();
 	private boolean ruined = false;
 	private long ruinedTime;
+	private boolean hasActiveWar = false;
 
 	public Town(String name) {
 		super(name);
@@ -1326,6 +1327,14 @@ public class Town extends Government implements TownBlockOwner {
 	 */
 	public void setDebtBalance(double balance) {
 		this.debtBalance = balance;
+	}
+	
+	public boolean hasActiveWar() {
+		return hasActiveWar;
+	}
+	
+	public void setActiveWar(boolean active) {
+		this.hasActiveWar = active;
 	}
 
 	public boolean isRuined() {

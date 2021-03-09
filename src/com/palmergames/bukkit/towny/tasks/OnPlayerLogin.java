@@ -2,7 +2,6 @@ package com.palmergames.bukkit.towny.tasks;
 
 import com.earth2me.essentials.Essentials;
 import com.palmergames.bukkit.towny.Towny;
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -157,9 +156,6 @@ public class OnPlayerLogin implements Runnable {
 					TownyMessaging.sendMsg(resident, Translation.of("msg_warning_your_town_is_ruined_for_x_more_hours", TownRuinSettings.getTownRuinsMaxDurationHours() - TownRuinUtil.getTimeSinceRuining(town)));
 			}
 
-			if (TownyAPI.getInstance().isWarTime())
-				universe.getWarEvent().sendScores(player, 3);
-		
 			//Schedule to setup default modes when the player has finished loading
 			if (BukkitTools.scheduleSyncDelayedTask(new SetDefaultModes(player.getName(), false), 1) == -1)
 				TownyMessaging.sendErrorMsg("Could not set default modes for " + player.getName() + ".");

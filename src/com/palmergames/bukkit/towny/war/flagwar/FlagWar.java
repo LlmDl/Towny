@@ -378,7 +378,7 @@ public class FlagWar {
 		}
 
 		// Update Cache
-		townyUniverse.addWarZone(worldCoord);
+		townyUniverse.addFlagWarZone(worldCoord);
 		plugin.updateCache(worldCoord);
 
 		TownyMessaging.sendGlobalMessage(Translation.of("msg_enemy_war_area_under_attack", landOwnerTown.getFormattedName(), worldCoord.toString(), attackingResident.getFormattedName()));

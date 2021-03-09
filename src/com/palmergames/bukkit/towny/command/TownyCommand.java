@@ -306,12 +306,13 @@ public class TownyCommand extends BaseCommand implements CommandExecutor {
 
 	private boolean TownyWar(String[] args, Player p) {
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
-		if (TownyAPI.getInstance().isWarTime() && args.length > 0) {
+//		if (TownyAPI.getInstance().isWarTime() && args.length > 0) {
+		if (args.length > 0) {
 			towny_war.clear();
 			if (args[0].equalsIgnoreCase("stats"))
-				towny_war.addAll(townyUniverse.getWarEvent().getStats());
+				towny_war.addAll(townyUniverse.getWarEvent(p).getScoreManager().getStats());
 			else if (args[0].equalsIgnoreCase("scores"))
-				towny_war.addAll(townyUniverse.getWarEvent().getScores(-1));
+				towny_war.addAll(townyUniverse.getWarEvent(p).getScoreManager().getScores(-1));
 			else if (args[0].equalsIgnoreCase("participants")) {
 				try {
 					parseWarParticipants(p, args);
@@ -334,66 +335,71 @@ public class TownyCommand extends BaseCommand implements CommandExecutor {
 	}
 
 	private void parseWarParticipants(Player player, String[] split) throws NotRegisteredException {
-		Resident resident = getResidentOrThrow(player.getUniqueId());
-		List<Town> townsToSort = War.warringTowns;
-		List<Nation> nationsToSort = War.warringNations;
-		int page = 1;
-		List<String> output = new ArrayList<>();
-		String nationLine;
-		String townLine;
-		for (Nation nations : nationsToSort) {
-			nationLine = Colors.Gold + "-" + nations.getName();
-			if (resident.hasNation())
-				if (resident.getTown().getNation().hasEnemy(nations))
-					nationLine += Colors.Red + " (Enemy)";
-				else if (resident.getTown().getNation().hasAlly(nations))
-					nationLine += Colors.Green + " (Ally)";
-			output.add(nationLine);
-			for (Town towns : townsToSort) {
-				if (towns.getNation().equals(nations)) {
-					townLine = Colors.Blue + "  -" + towns.getName();
-					if (towns.isCapital())
-						townLine += Colors.LightBlue + " (Capital)";
-					output.add(townLine);
-				}
-			}
-		}
-		int total = (int) Math.ceil((output.size()) / (double) 10);
-		if (split.length > 1) {
-			try {
-				page = Integer.parseInt(split[1]);
-				if (page < 0) {
-					TownyMessaging.sendErrorMsg(player, Translation.of("msg_err_negative"));
-					return;
-				} else if (page == 0) {
-					TownyMessaging.sendErrorMsg(player, Translation.of("msg_error_must_be_int"));
-					return;
-				}
-			} catch (NumberFormatException e) {
-				TownyMessaging.sendErrorMsg(player, Translation.of("msg_error_must_be_int"));
-				return;
-			}
-		}
-		if (page > total) {
-			TownyMessaging.sendErrorMsg(player, Translation.of("LIST_ERR_NOT_ENOUGH_PAGES", total));
-			return;
-		}
 
-		int iMax = page * 10;
-		if ((page * 10) > output.size()) {
-			iMax = output.size();
+//		Resident resident = getResidentOrThrow(player.getUniqueId());
+//		List<Town> townsToSort = War.warringTowns;
+//		List<Nation> nationsToSort = War.warringNations;
+//		int page = 1;
+//		List<String> output = new ArrayList<>();
+//		String nationLine;
+//		String townLine;
+//		for (Nation nations : nationsToSort) {
+//			nationLine = Colors.Gold + "-" + nations.getName();
+//			if (resident.hasNation())
+//				if (resident.getTown().getNation().hasEnemy(nations))
+//					nationLine += Colors.Red + " (Enemy)";
+//				else if (resident.getTown().getNation().hasAlly(nations))
+//					nationLine += Colors.Green + " (Ally)";
+//			output.add(nationLine);
+//			for (Town towns : townsToSort) {
+//				if (towns.getNation().equals(nations)) {
+//					townLine = Colors.Blue + "  -" + towns.getName();
+//					if (towns.isCapital())
+//						townLine += Colors.LightBlue + " (Capital)";
+//					output.add(townLine);
+//				}
+//			}
+//		}
+//		int total = (int) Math.ceil((output.size()) / (double) 10);
+//		if (split.length > 1) {
+//			try {
+//				page = Integer.parseInt(split[1]);
+//				if (page < 0) {
+//					TownyMessaging.sendErrorMsg(player, Translation.of("msg_err_negative"));
+//					return;
+//				} else if (page == 0) {
+//					TownyMessaging.sendErrorMsg(player, Translation.of("msg_error_must_be_int"));
+//					return;
+//				}
+//			} catch (NumberFormatException e) {
+//				TownyMessaging.sendErrorMsg(player, Translation.of("msg_error_must_be_int"));
+//				return;
+//			}
+//		}
+//		if (page > total) {
+//			TownyMessaging.sendErrorMsg(player, Translation.of("LIST_ERR_NOT_ENOUGH_PAGES", total));
+//			return;
+//		}
+//
+//		int iMax = page * 10;
+//		if ((page * 10) > output.size()) {
+//			iMax = output.size();
+//		}
+//		List<String> warparticipantsformatted = new ArrayList<>();
+//		for (int i = (page - 1) * 10; i < iMax; i++) {
+//			String line = output.get(i);
+//			warparticipantsformatted.add(line);
+//		}
+//		player.sendMessage(ChatTools.formatList("War Participants",
+//				Colors.Gold + "Nation Name" + Colors.Gray + " - " + Colors.Blue + "Town Names",
+//				warparticipantsformatted, Translation.of("LIST_PAGE", page, total)
+//				)
+//		);
+//		output.clear();
+		
+		for (War war : TownyUniverse.getInstance().getWars()) {
+			war.getWarParticipants().outputParticipants(war.getWarType(), war.getWarName());
 		}
-		List<String> warparticipantsformatted = new ArrayList<>();
-		for (int i = (page - 1) * 10; i < iMax; i++) {
-			String line = output.get(i);
-			warparticipantsformatted.add(line);
-		}
-		player.sendMessage(ChatTools.formatList("War Participants",
-				Colors.Gold + "Nation Name" + Colors.Gray + " - " + Colors.Blue + "Town Names",
-				warparticipantsformatted, Translation.of("LIST_PAGE", page, total)
-				)
-		);
-		output.clear();
 	}	
 	
 	private void TopCommand(Player player, String[] args) {

@@ -63,7 +63,8 @@ public enum HelpMenu {
 				.add("database [save/load]", "")
 				.add("newday", Translation.of("admin_panel_3"))
 				.add("purge [number of days]", "")
-				.add("delete [] .. []", "delete a residents data files.");
+				.add("delete [] .. []", "delete a residents data files.")
+				.add("war", "");
 		}
 	},
 

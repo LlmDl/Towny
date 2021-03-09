@@ -2278,6 +2278,12 @@ public enum ConfigNodes {
 			"",
 			"# If set to true when a town knocks another town out of the war, the losing town will join the winning town's nation.",
 			"# The losing town will enter a conquered state and be unable to leave the nation until the conquered time has passed."),
+	WAR_EVENT_WINNER_TAKES_OWNERSHIP_OF_TOWNS_EXCLUDES_CAPITALS(
+			"war.event.winner_takes_ownership_of_town_excludes_nation_capitals",
+			"true",
+			"",
+			"# If set to true, and winner_takes_ownership_of_town is also true, nation capitals will not switch nations.",
+			"# If false, and winner_takes_ownership_of_town is also true, the losing nation will be deleted and the capital will change nations."),
 	WAR_EVENT_CONQUER_TIME(
 			"war.event.conquer_time",
 			"7",

@@ -44,6 +44,7 @@ import com.palmergames.bukkit.towny.utils.MoneyUtil;
 import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
 import com.palmergames.bukkit.towny.utils.SpawnUtil;
 import com.palmergames.bukkit.towny.war.common.WarZoneListener;
+import com.palmergames.bukkit.towny.war.eventwar.War;
 import com.palmergames.bukkit.towny.war.flagwar.FlagWar;
 import com.palmergames.bukkit.towny.war.flagwar.listeners.FlagWarBlockListener;
 import com.palmergames.bukkit.towny.war.flagwar.listeners.FlagWarCustomListener;
@@ -214,8 +215,10 @@ public class Towny extends JavaPlugin {
 			FlagWar.onDisable();
 		}
 
-		if (TownyAPI.getInstance().isWarTime()) {
-			TownyUniverse.getInstance().getWarEvent().toggleEnd();
+		if (TownyUniverse.getInstance().isWarTime()) {
+			for (War war : TownyUniverse.getInstance().getWars()) { // TODO: Some persistant saving for wars.
+				war.end(true);
+			}
 		}
 
 		// Turn off timers.		
