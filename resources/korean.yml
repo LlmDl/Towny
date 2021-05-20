@@ -1031,7 +1031,7 @@ msg_ta_deposit_all_success: '성공적으로 %s 이 모든 국가와 마을의 �
 bonus_townblocks: '보너스 마을 블록'
 
 # Added in 0.80
-nomad_sing: '유목민'
+nomad_sing: 'Nomad'
 msg_new_town_advice: '마을을 생성하신 것을 축하합니다! 현재 당신 마을의 유지비는 %s입니다. 현재 소유하고 있는 돈을 ''/t deposit #'' 명령어를 사용하여 마을 금고에 넣어보세요. 마을 금고에 돈을 넣지 않아 유지비를 지불하지 못할 경우 마을은 삭제될 것 입니다. 언제든지 /towny prices 명령어를 통해 유지비를 확인하실 수 있습니다. 다음 유지비는 %s 뒤에 걷어집니다.'
 
 # Added in 0.81
@@ -1040,64 +1040,64 @@ msg_err_teleport_cancelled_damage: '공격을 받아서 이동이 취소되었�
 # Added in 0.82
 invitation_prefix: "&8[&7초대&8] &9"
 confirmation_prefix: "&8[&7확인&8] &9"
-this_message_will_expire2: '&9이 메세지는 20초뒤 만료됩니다.'
+this_message_will_expire2: '&920초 내에 만료됩니다'
 msg_hover_next_page: '다음 페이지'
 msg_hover_previous_page: '이전 페이지'
 
 # Added in 0.83
-msg_max_tax_amount_only_for_percent: "Max tax amounts can only be set for towns with tax percentages."
-msg_town_set_tax_max_percent_amount: "%s has set the max tax percent amount to %s."
+msg_max_tax_amount_only_for_percent: "퍼센트(%) 세금을 사용하는 마을만 최대 세금을 설정할 수 있습니다."
+msg_town_set_tax_max_percent_amount: "%s가 최대 세금을 %s로 설정했습니다."
 
 # Added in 0.84
-msg_err_plot_belongs_to_group_toggle: 'Plot belongs to a group, use /plot group toggle'
+msg_err_plot_belongs_to_group_toggle: '땅이 그룹에 속해 있습니다, /plot group toggle을 사용하십시오.'
 
 # Added in 0.85
-msg_set_perms_reset_single: '&bSuccessfully reset permissions on this plot.'
+msg_set_perms_reset_single: '&b성공적으로 이 땅의 권한을 초기화했습니다.'
 
 #Added in 0.86
 status_bank_bankrupt: '&2금고: &a%s &c(파산)'
-msg_warning_bankrupt: '&4*** 경고, %s 는 금고에 돈이 없어 새 날이 되면 파산할 것 입니다 ***'
-msg_town_bankrupt_by_upkeep: '&b%s 마을이 유지비를 감당 할 수 없어 파산 하였습니다.'
-msg_town_bankrupt_by_upkeep_multiple: '&b다음 마을들이 유지비를 감당 할 수 없어 파산하였습니다.: '
-msg_town_bankrupt_by_nation_tax: '&b%s 마을이 국가 세금을 감당 할 수 없어 파산하였습니다.'
-msg_town_bankrupt_by_nation_tax_multiple:  '&b다음 마을들이 국가 세금을 감당 할 수 없어 파산 하였습니다: '
-msg_town_debts_cleared: '%s 마을이 빚을 청산하여 더이상 파산 상태가 아닙니다.'
-msg_err_bankrupt_town_cannot_claim: 'Not allowed to claim plots for a bankrupt town.'
-msg_err_bankrupt_town_cannot_build: 'Not allowed to build in a bankrupt town.'
-msg_err_bankrupt_town_cannot_toggle_open: 'Not allowed to toggle open in a bankrupt town.'
-msg_err_bankrupt_town_cannot_invite: 'Not allowed to invite players to a bankrupt town.'
-msg_payed_nation_tax: '&b국가 세금 %s 을 냈습니다'
-msg_your_town_couldnt_pay_the_nation_tax_of: '&b당신의 마을이 국가 세금 %s 을 감당하지 못해 국가로 부터 추방당했습니다.'
-msg_your_town_payed_upkeep: '&b당신의 마을이 하루 유지비 %s 를 냈습니다..'
-msg_your_nation_payed_upkeep: '&b당신의 국가가 하루 유지비 %s 를 냈습니다.'
-msg_your_town_couldnt_pay_upkeep: '&b당신의 마을이 유지비 %s 를 감당하지 못해 해체 되었습니다.'
-msg_your_nation_couldnt_pay_upkeep: '&b당신의 국가가 유지비 %s 를 감당 하지 못해 해체 되었습니다.'
+msg_warning_bankrupt: '&4*** 경고, 금고 잔액이 부족하여 %s은(는) 몇일 뒤에 파산합니다! ***'
+msg_town_bankrupt_by_upkeep: '&b%s은(는) 유지비를 지불하지 못하여 파산했습니다'
+msg_town_bankrupt_by_upkeep_multiple: '&b다음 마을들은 유지비를 지불하지 못하여 파산했습니다.: '
+msg_town_bankrupt_by_nation_tax: '&b%s은(는) %s의 국가 세금을 지불하지 못하여 파산했습니다.'
+msg_town_bankrupt_by_nation_tax_multiple:  '&b다음 마을들은 국가 세금을 지불하지 못하여 파산했습니다.: '
+msg_town_debts_cleared: '%s 은(는) 빚을 모두 갚아서 파산 상태에서 벗어났습니다.'
+msg_err_bankrupt_town_cannot_claim: '파산한 마을은 땅을 구매할 수 없습니다.'
+msg_err_bankrupt_town_cannot_build: '파산한 마을에서 건축을 할 수 없습니다.'
+msg_err_bankrupt_town_cannot_toggle_open: '파산한 마을은 마을 공개/비공개 설정을 할 수 없습니다.'
+msg_err_bankrupt_town_cannot_invite: '파산한 마을은 플레이어를 초대할 수 없습니다.'
+msg_payed_nation_tax: '&b%s의 국가 세금을 지불했습니다.'
+msg_your_town_couldnt_pay_the_nation_tax_of: '&b당신의 마을은 %s의 국가 세금을 지불하지 못하여 국가에서 추방되었습니다.'
+msg_your_town_payed_upkeep: '&b당신의 마을은 %s의 일일 유지비를 지불했습니다.'
+msg_your_nation_payed_upkeep: '&b당신의 국가는 %s의 일일 유지비를 지불했습니다.'
+msg_your_town_couldnt_pay_upkeep: '&b당신의 마을은 %s의 일일 유지비를 지불하지 못하여 해체되었습니다.'
+msg_your_nation_couldnt_pay_upkeep: '&b당신의 국가는 %s의 일일 유지비를 지불하지 못하여 해체되었습니다.'
 
 #Added in 0.87
-msg_town_reached_debtcap_and_is_disbanded: '&b%s 마을이 유지비를 감당하지 못하고, 부채 한도에 도달하여, 해체 되었습니다.'
-msg_town_reached_debtcap_and_is_disbanded_multiple: '&b다음 마을들이 유지비를 감당하지 못하고, 부채 한도에 도달하여, 해체 되었습니다: '
-msg_unable_to_deposit_x: '%s 을 마을 금고에 입금 할 수 없습니다.'
-msg_unable_to_withdraw_x: '%s 을 마을 금고에서 출금 할 수 없습니다.'
-status_debtcap: '&2부채 한도: &a%s'
-status_world_explrevert_entity: '&2Entity Explosion Revert: '
-status_world_explrevert_block: '&2Block Explosion Revert: '
+msg_town_reached_debtcap_and_is_disbanded: '&b%s은(는) 유지비를 지불하지 못했고, 빚 한도를 초과하여 해체되었습니다.'
+msg_town_reached_debtcap_and_is_disbanded_multiple: '&b다음 마을들은 유지비를 지불하지 못했고, 빚 한도를 초과하여 해체되었습니다: '
+msg_unable_to_deposit_x: '%s을 해당 마을 금고에 넣을 수 없습니다.'
+msg_unable_to_withdraw_x: '%s을 해당 마을 금고에서 뺄 수 없습니다.'
+status_debtcap: '&2빚 한도: &a%s'
+status_world_explrevert_entity: '&2엔티티 폭발 롤백: '
+status_world_explrevert_block: '&2블록 폭발 롤백: '
 
 #Added in 0.88
-msg_nation_already_peaceful: '&cNation is already peaceful.'
-msg_nation_already_not_peaceful: '&cNation is already not peaceful.'
+msg_nation_already_peaceful: '&c국가는 이미 Peaceful상태입니다.'
+msg_nation_already_not_peaceful: '&c국가는 이미 Peaceful상태가 아닙니다.'
 
 #Added in 0.89
-status_world_friendlyfire: '&2FriendlyFire: '
-status_world_wildernessmobs: '&2Wilderness Mobs: '
-msg_outlaw_kick_cooldown: '&cYou''re considered an outlaw in %s. You have %s remaining for you to leave the town, otherwise, you will get teleported back to your spawnpoint.'
-msg_outlaw_kicked: '&4You are not welcome in %s. You were teleported away.'
-msg_outlaw_town_notify: '&cAn outlaw, %s, has entered your town''s territory.'
-msg_your_town_payed_upkeep_with_debt: '&cYour town paid the daily upkeep of %s with debt.'
-msg_payed_nation_tax_with_debt: '&cYour town paid the nation tax of %s with debt.'
+status_world_friendlyfire: '&2아군 공격: '
+status_world_wildernessmobs: '&2야생 몬스터: '
+msg_outlaw_kick_cooldown: '&c당신은 %s에서 무법자 상태로 간주됩니다. 당신은 %s 이내에 이 마을을 떠나야 합니다, 그렇지 않으면 당신은 스폰 지점으로 텔레포트됩니다.'
+msg_outlaw_kicked: '&4당신응 %s에서 환영받지 못합니다. 마을에서부터 텔레포트 되었습니다.'
+msg_outlaw_town_notify: '&c무법자 %s가 당신의 마을 영토에 침입했습니다.'
+msg_your_town_payed_upkeep_with_debt: '&c당신의 마을은 빚으로 %s만큼의 일일 유지비를 지불했습니다.'
+msg_payed_nation_tax_with_debt: '&c당신의 마을은 빚으로 %s만큼의 국가 세금을 지불했습니다.'
 
 #Added in 0.90
 status_plot_clear_deletion: '&2PlotClearBlockDelete: '
-msg_err_plot_clear_disabled_in_this_world: 'The /plot clear command is disabled in this world.'
+msg_err_plot_clear_disabled_in_this_world: '/plot clear 명령어는 이 월드에서 비활성화되었습니다.'
 
 #Added in 0.91
 msg_universe_attribution: 'Authors: '
@@ -1109,36 +1109,36 @@ townblock_plu: 'TownBlocks'
 #Town Ruins
 admin_panel_4: 'Run the new hour code'
 msg_newhour_success: 'newhour command executed successfully'
-town_help_12: 'Reclaim your town from a ruined state.'
-msg_warning_town_ruined_if_deleted: "WARNING!!!: If you delete your town it will enter a ruined state for %d hours. After this time full deletion will occur. In the ruined state, all perms are enabled and the town can be griefed."
-msg_warning_town_ruined_if_deleted2: "The town can be reclaimed by any town resident by using ''/t reclaim'' after %d hours."
-msg_err_cannot_reclaim_town_unless_ruined: '&cYou cannot reclaim your town because it is not ruined.'
-msg_err_cannot_reclaim_town_yet: '&cYou cannot reclaim your town for another %d hours.'
-msg_town_reclaimed: '&b%s has reclaimed the town of %s.'
-msg_err_cannot_attack_ruined_town: '&6[War]&c You cannot attack a ruined town.'
-msg_err_cannot_use_command_because_town_ruined: "&cYou cannot use this command because your town is ruined. To resume normal command usage, either reclaim the town using ''/town reclaim'', or leave the town using ''/town leave''."
-msg_warning_your_town_is_ruined_for_x_more_hours: '&cYour town lies in a ruined state for %d more hours. Use ''/town reclaim'' to save the town and become mayor.'
-msg_time_remaining_before_full_removal: '&cTime remaining before full removal: %d hours.'
-msg_time_until_reclaim_available: '&cTime until reclaim available: %d hours.'
-msg_reclaim_available: '&aReclaim available.'
+town_help_12: '폐허 상태의 마을 재점유.'
+msg_warning_town_ruined_if_deleted: "경고!!!: 마을을 삭제하면 마을은 %d시간동안 폐허 상태가 됩니다. 시간이 지난 후에는 마을 전체가 삭제됩니다. 폐허 상태에서는 모든 권한이 풀리고 외부인들이 마을을 파괴, 약탈할 수 있습니다."
+msg_warning_town_ruined_if_deleted2: "%d시간 후부터 마을 주민 누구나 ''/t reclaim'' 명령어를 사용하여 재점유 할 수 있습니다."
+msg_err_cannot_reclaim_town_unless_ruined: '&c마을이 폐허 상태가 아니라 재점유가 불가능합니다.'
+msg_err_cannot_reclaim_town_yet: '&c%d시간동안 마을 재점유가 불가능합니다.'
+msg_town_reclaimed: '&b%s 이(가) %s 마을을 재점유했습니다.'
+msg_err_cannot_attack_ruined_town: '&6[전쟁]&c 폐허 상태인 마을은 공격할 수 없습니다.'
+msg_err_cannot_use_command_because_town_ruined: "&c당신의 마을은 폐허 상태라 이 명령어를 사용할 수 없습니다. 마을 명령어를 사용하려면, ''/town reclaim''으로 마을을 재점유하거나 ''/town leave''로 마을을 떠나십시오."
+msg_warning_your_town_is_ruined_for_x_more_hours: '&c당신의 마을은 &d시간동안 폐허 상태입니다. ''/town reclaim'' 으로 마을을 구하고 시장이 될 수 있습니다.'
+msg_time_remaining_before_full_removal: '&c전체 삭제까지 남은 시간: %d 시간.'
+msg_time_until_reclaim_available: '&c재점유 가능 시간: %d 시간.'
+msg_reclaim_available: '&a재점유 가능.'
 
 #Added in 0.93
-msg_changed_peaceful: '&cTown neutrality/peacefullness is now %s.'
-msg_err_town_unclaim_canceled: '&cUnclaim canceled. You cannot unclaim this area at this time.'
+msg_changed_peaceful: '&c마을 중립/평화 상태는 이제 %s입니다'
+msg_err_town_unclaim_canceled: '&c땅 점유 취소 불가능. 이 땅의 점유를 취소할 수 없습니다.'
 
 #Added in 0.94
-msg_comptype_residents: 'Number of Residents'
-msg_comptype_townblocks: 'Number of Claimed Townblocks'
-msg_comptype_balance: 'Bank Balance'
-msg_comptype_online: 'Online Players'
-msg_comptype_towns: 'Number of Towns'
-msg_comptype_name: 'Alphabetical Order'
-msg_comptype_open: 'Open Status'
-msg_status_npc: '&c%s is not an real player, and is limited to Towny only.'
-npc_created: '&2Created: &a%s'
-msg_no_funds_claim_plot: '&cYou cannot afford to claim the plot costing %s.'
-msg_no_funds_claim_plot_group: '&cYou cannot afford to claim the %s plots costing %s.'
-status_town_title_peaceful: '&b(Peacful)'
+msg_comptype_residents: '주민 수'
+msg_comptype_townblocks: '점유한 클레임 개수'
+msg_comptype_balance: '금고 잔고'
+msg_comptype_online: '접속 중인 플레이어'
+msg_comptype_towns: '마을 개수'
+msg_comptype_name: '알파벳 순서'
+msg_comptype_open: '마을 미초대 가입 상태'
+msg_status_npc: '&c%s 은(는) 실제 플레이어가 아니고, 타우니에만 제한되어 있습니다.'
+npc_created: '&2생성됨: &a%s'
+msg_no_funds_claim_plot: '&c이 땅을 점유하기 위한 돈 %s이 부족합니다.'
+msg_no_funds_claim_plot_group: '&c이 땅을 점유하기 위한 돈 %s이 부족합니다.'
+status_town_title_peaceful: '&b(Peaceful)'
 
 #Added in 0.95
 status_public: '&b(Public)'
@@ -1171,9 +1171,9 @@ towny_prices_nationname: '&cNation: &6%s'
 towny_prices_nation_tax: '&c    [세금] &2Town: &a%s &8| &2Peace: &a%s'
 
 #Added in 0.96
-msg_town_destroyed_by_nation_tax: '&bThe conquered town %s couldn''t pay the nation tax and has fallen.'
-msg_town_destroyed_by_nation_tax_multiple: '&bThe following conquered towns could not afford the nation tax and have fallen: '
-msg_your_town_was_exempt_from_the_nation_tax: '&bYour town was exempt from the nation tax.'
+msg_town_destroyed_by_nation_tax: '&b점령된 마을 %s은(는) 국가 세금을 지불할 수 없어 무너졌습니다.'
+msg_town_destroyed_by_nation_tax_multiple: '&b다음 점령된 마을들은 국가 세금을 지불할 수 없어 무너졌습니다: '
+msg_your_town_was_exempt_from_the_nation_tax: '&b당신의 마을은 국가 세금이 면제되었습니다.'
 
 #Added in 0.97
 status_perm_line_format: '&a%s = &7' # The Build = ---- Destroy = ---- seen in the status screen.
@@ -1183,8 +1183,8 @@ msg_ruined: '&c(폐허)'
 msg_bankrupt: '&c(파산)'
 
 #Added in 0.98
-msg_del_town2: '&b%s 마을이 삭제 되었습니다!'
-msg_ruin_town: '&b%s 마을이 폐허 상태가 되었습니다!'
+msg_del_town2: '&b%s마을이 삭제되었습니다!'
+msg_ruin_town: '&b%s마을은 폐허 상태가 되었습니다!'
 gui_title_towny_farmblocks: 'Towny FarmBlocks List'
 gui_title_towny_wildsblocks: 'Towny WildsBlocks List'
 gui_title_towny_itemuse: 'Towny ItemUse List'
@@ -1247,49 +1247,49 @@ msg_ta_removed_all_titles_and_surnames_removed: 'All residents have had their ti
 msg_err_homeblock_already_set_here: 'This location is already your town''s homeblock.'
 
 #Added in 0.100
-msg_town_merge_err_mayor_only: '&cMerging can only be done by a mayor.'
-msg_town_merge_err_not_close: '&cThe town of %s is too far away from your town. Their homeblock has to be within %d townblocks of your homeblock.'
-msg_town_merge_request_sent: '&bMerge request sent to the mayor of %s.'
-msg_town_merge_request_received: '&bThe mayor of %s, %s, has requested to merge with your town. This will transfer all townblocks, residents and town bank money to %s.'
-msg_town_merge_request_denied: '&cMerge request denied.'
-msg_town_merge_other_offline: '&cThe mayor of %s, %s, is currently offline. Merge failed.'
-msg_town_merge_err_too_many_residents: '&cMerge failed: New resident amount exceeds the limit (%d)'
-msg_town_merge_err_too_many_townblocks: '&cMerge failed: New town size exceeds the limit (%d)'
-msg_town_merge_err_too_many_outposts: '&cMerge failed: New outpost amount exceeds the limit (%d)'
-msg_town_merge_err_not_enough_money: '&cMerge failed: Not enough money. (%s/%s)'
-msg_town_merge_err_too_many_purchased_townblocks: '&cMerge failed: Too many purchased townblocks (%d)'
-msg_town_merge_warning: '&cWarning: If accepted, merging with %s will cost %s.'
-msg_town_merge_debt_warning: '&cWarning: %s is currently in debt, you will have to pay their debt if accepted.'
-msg_town_merge_cost_breakdown: '&bCost breakdown: Base cost: %s, Townblock cost: %s, Bankruptcy cost: %s'
-msg_town_merge_failed: '&cMerge failed.'
-msg_town_merge_cancelled: '&cMerge canceled.'
+msg_town_merge_err_mayor_only: '&c합병은 마을 시장만 할 수 있습니다.'
+msg_town_merge_err_not_close: '&c%s마을은 당신의 마을에서 너무 멉니다. 그 마을의 홈블록은 적어도 당신 마을의 홈블록으로부터 %d청크 이내에 있어야 합니다.'
+msg_town_merge_request_sent: '&b합병 요청이 %s마을 시장에게 전달되었습니다.'
+msg_town_merge_request_received: '&b%s마을의 시장, %s이(가) 당신의 마을과의 합병 요청을 보냈습니다. 합병은 모든 마을 땅, 주민, 그리고 금고 잔액을 %s마을에게 보내게 됩니다.'
+msg_town_merge_request_denied: '&c합병 요청이 거절되었습니다.'
+msg_town_merge_other_offline: '&c%s마을의 시장, %s은 현재 오프라인 상태입니다. 합병 실패.'
+msg_town_merge_err_too_many_residents: '&c합병 실패: 새 주민 인원수가 주민 수 제한을 초과합니다. (%d)'
+msg_town_merge_err_too_many_townblocks: '&c합병 실패: 새 마을의 땅 개수가 제한을 초과합니다 (%d)'
+msg_town_merge_err_too_many_outposts: '&c합병 실패: 새 마을의 전초기지 개수가 제한을 초과합니다 (%d)'
+msg_town_merge_err_not_enough_money: '&c합병 실패: 돈이 부족합니다. (%s/%s)'
+msg_town_merge_err_too_many_purchased_townblocks: '&c합병 실패: 구매한 땅이 너무 많습니다 (%d)'
+msg_town_merge_warning: '&c경고: 합병 수락 시, %s만큼의 돈을 지불해야 합니다.'
+msg_town_merge_debt_warning: '&c경고: %s은(는) 현재 파산 상태입니다, 수락 시 당신은 이 빚을 갚아야 합니다..'
+msg_town_merge_cost_breakdown: '&b비용: 기본 비용: %s, 타운블록 비용: %s, 파산 비용: %s'
+msg_town_merge_failed: '&c합병 실패.'
+msg_town_merge_cancelled: '&c합병 취소됨.'
 msg_town_merge_success: '&bThe town of %s, owned by %s, has successfully merged into the town of %s.'
 #Reasons for withdrawing/depositing for the bankhistory book.
-msg_town_merge_cost_withdraw: 'Town Merge Costs'
-msg_town_merge_transaction_reason: 'Town Merge'
+msg_town_merge_cost_withdraw: '마을 합병 비용'
+msg_town_merge_transaction_reason: '마을 합병'
 
-towny_prices_town_merge: '&e[Merging] &2Base Cost: &a%s &8| &2Per Plot: &a%s'
+towny_prices_town_merge: '&e[합병] &2기본 비용: &a%s &8| &2플롯 당: &a%s'
 
 #Added in 0.101
-msg_err_nation_not_allied_with: '&cYour nation isn''t allied with %s.'
-msg_err_nation_not_enemies_with: '&cYour nation isn''t enemies with %s.'
-msg_err_nation_already_enemies_with: '&cYour nation is already enemies with %s.'
-msg_err_ally_already_requested: '&cYou have already requested to ally with %s.'
+msg_err_nation_not_allied_with: '&c당신의 국가는 %s와(과) 동맹 상태가 아닙니다.'
+msg_err_nation_not_enemies_with: '&c당신의 국가는 %s와(과) 적대 상태가 아닙니다.'
+msg_err_nation_already_enemies_with: '&c당신의 국가는 이미 %s와(과) 적대 상태입니다.'
+msg_err_ally_already_requested: '&c당신은 이미 %s에게 동맹 요청을 보냈습니다.'
 
-msg_err_nation_not_allied_with_2: '&c%s isn''t allied with %s.'
-msg_err_nation_not_enemies_with_2: '&c%s isn''t enemies with %s.'
-msg_err_nation_already_allied_with_2: '&c%s is already allied with %s.'
-msg_err_nation_already_enemies_with_2: '&c%s is already enemies with %s.'
-msg_ta_allies_enemies_updated: '&bAllies/Enemies updated for %s.'
+msg_err_nation_not_allied_with_2: '&c%s는 %s와(과) 동맹 상태가 아닙니다.'
+msg_err_nation_not_enemies_with_2: '&c%s는 %s와(과) 적대 상태가 아닙니다.'
+msg_err_nation_already_allied_with_2: '&c%s는 이미 %s와(과) 이미 동맹 상태입니다.'
+msg_err_nation_already_enemies_with_2: '&c%s는 이미 %s와(과) 적대 상태입니다.'
+msg_ta_allies_enemies_updated: '&b%s와의 동맹/적대 상태가 업데이트되었습니다.'
 
 #Added in 0.102
-towny_map_detailed_information: '&2Click to see detailed plot information.'
-msg_err_nation_capital_too_many_residents: '&cThe current capital city has too many residents to be replaced by %s.'
-msg_deleting_nation_will_result_in_losing_residents: '&cWarning: Deleting your nation will mean your town is over the population limit of %d, resulting in the removal of %d residents.'
+towny_map_detailed_information: '&2클릭하여 자세한 플롯 정보 확인.'
+msg_err_nation_capital_too_many_residents: '&c현재 수도 마을은 %s로 수도를 이전하기에 너무 많은 주민을 가지고 있습니다.'
+msg_deleting_nation_will_result_in_losing_residents: '&c경고: 국가를 삭제하면 당신의 마을은 인구 제한 %d명을 초과하여, %d명의 주민을 잃게 됩니다.'
 
 # Added in 0.103
-msg_command_blocked_inside_towns: '&cYou cannot use that command inside towns.'
-msg_command_limited: 'You can only use that command inside your own plots.'
+msg_command_blocked_inside_towns: '&c마을 안에서 이 명령어를 사용할 수 없습니다.'
+msg_command_limited: '당신의 땅 안에서만 이 명령어를 사용할 수 있습니다.'
 
 #Added in 0.104
 msg_plot_perm_claimed_at: '&2Claimed at: &a%s'
