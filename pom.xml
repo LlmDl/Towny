@@ -187,6 +187,11 @@
             <version>5.3</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20210307</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -258,6 +263,7 @@
                             <include>org.bstats:bstats-bukkit</include>
                             <include>org.bstats:bstats-base</include>
                             <include>org.slf4j:slf4j-api</include>
+                            <include>org.json:json</include>
                         </includes>
                     </artifactSet>
                     <relocations>

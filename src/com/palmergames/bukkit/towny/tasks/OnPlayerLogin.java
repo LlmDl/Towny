@@ -8,16 +8,21 @@ import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyTimerHandler;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.TownyUpdateChecker;
 import com.palmergames.bukkit.towny.exceptions.AlreadyRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.permissions.PermissionNodes;
 import com.palmergames.bukkit.towny.permissions.TownyPerms;
 import com.palmergames.bukkit.towny.war.common.townruin.TownRuinSettings;
 import com.palmergames.bukkit.towny.war.common.townruin.TownRuinUtil;
 import com.palmergames.bukkit.util.BukkitTools;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -163,6 +168,14 @@ public class OnPlayerLogin implements Runnable {
 			//Schedule to setup default modes when the player has finished loading
 			if (BukkitTools.scheduleSyncDelayedTask(new SetDefaultModes(player.getName(), false), 1) == -1)
 				TownyMessaging.sendErrorMsg("Could not set default modes for " + player.getName() + ".");
+			
+			if (TownyUpdateChecker.hasUpdate() && TownySettings.isShowingUpdateNotifications() && player.hasPermission(PermissionNodes.TOWNY_ADMIN_UPDATENOTIFICATIONS.getNode())) {
+				Audience audience = Towny.getAdventure().player(player);
+				ClickEvent clickEvent = ClickEvent.openUrl(TownyUpdateChecker.getUpdateURL());
+				
+				audience.sendMessage(Component.text(Translation.of("default_towny_prefix") + Translation.of("msg_new_update_available", TownyUpdateChecker.getNewVersion(), Towny.getPlugin().getVersion())).clickEvent(clickEvent));
+				audience.sendMessage(Component.text(Translation.of("default_towny_prefix") + Translation.of("msg_click_to_download")).clickEvent(clickEvent));
+			}
 		}
 	}
 	

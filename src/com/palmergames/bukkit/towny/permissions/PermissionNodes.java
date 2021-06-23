@@ -10,6 +10,7 @@ public enum PermissionNodes {
 	TOWNY_ADMIN_OUTLAW_TELEPORT_BYPASS("towny.admin.outlaw.teleport_bypass"),
 	TOWNY_ADMIN_TOWN_COMMAND_BLACKLIST_BYPASS("towny.admin.town_commands.blacklist_bypass"),
 	TOWNY_ADMIN_TOURIST_COMMAND_LIMITATION_BYPASS("towny.globally_welcome"),
+	TOWNY_ADMIN_UPDATENOTIFICATIONS("towny.admin.updatenotifications"),
 	
 	/*
 	 * Nation command permissions

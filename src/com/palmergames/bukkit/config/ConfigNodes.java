@@ -1086,6 +1086,11 @@ public enum ConfigNodes {
 		"# A blacklist used for validating town/nation names.",
 		"# Names must be seperated by a comma: name1,name2"
 	),
+	PLUGIN_UPDATE_NOTIFICATIONS(
+		"plugin.update_notifications",
+		"true",
+		"",
+		"# If enabled, players with the towny.admin.updatenotifications permission will receive an update notification upon logging in."),
 	FILTERS_COLOUR_CHAT(
 			"filters_colour_chat",
 			"",

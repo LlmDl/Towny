@@ -62,6 +62,7 @@ permissions:
             towny.admin.outlaw.teleport_bypass: true
             towny.admin.spawn: true
             towny.admin.town_commands.blacklist_bypass: true
+            towny.admin.updatenotifications: true
 
     towny.outlaw.jailer:
         description: Node given in townyperms.yml to mayors, assistants and sheriffs by default. Required to jail outlaws that are killed in a town.

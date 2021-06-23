@@ -10,6 +10,7 @@ import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyTimerHandler;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.TownyCommandAddonAPI.CommandType;
+import com.palmergames.bukkit.towny.TownyUpdateChecker;
 import com.palmergames.bukkit.towny.db.TownyDataSource;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.huds.HUDManager;
@@ -141,9 +142,16 @@ public class TownyCommand extends BaseCommand implements CommandExecutor {
 				}
 			} else if (args[0].equalsIgnoreCase("time")) {
 				TownyMessaging.sendMsg(Translation.of("msg_time_until_a_new_day") + TimeMgmt.formatCountdownTime(TownyTimerHandler.townyTime()));
-			} else if (args[0].equalsIgnoreCase("version") || args[0].equalsIgnoreCase("v"))
-				TownyMessaging.sendMessage(sender, Colors.strip(towny_version));
-			else if (args[0].equalsIgnoreCase("war")) {
+			} else if (args[0].equalsIgnoreCase("version") || args[0].equalsIgnoreCase("v")) {
+				if (TownyUpdateChecker.hasUpdate()) {
+					TownyMessaging.sendMessage(sender, Colors.strip(Translation.of("msg_latest_version", plugin.getVersion(), TownyUpdateChecker.getNewVersion())));
+				} else {
+					TownyMessaging.sendMsg(sender, towny_version);
+					
+					if (TownyUpdateChecker.hasCheckedSuccessfully())
+						TownyMessaging.sendMsg(sender, Translation.of("msg_up_to_date"));
+				}
+			} else if (args[0].equalsIgnoreCase("war")) {
 				boolean war = TownyWar(StringMgmt.remFirstArg(args), null);
 				if (war)
 					for (String line : towny_war)
@@ -280,7 +288,15 @@ public class TownyCommand extends BaseCommand implements CommandExecutor {
 			} else if (split[0].equalsIgnoreCase("version") || split[0].equalsIgnoreCase("v")) {
 				if (!permSource.testPermission(player, PermissionNodes.TOWNY_COMMAND_TOWNY_VERSION.getNode(split[0].toLowerCase())))
 					throw new TownyException(Translation.of("msg_err_command_disable"));
-				TownyMessaging.sendMessage(player, towny_version);
+
+				if (TownyUpdateChecker.hasUpdate()) {
+					TownyMessaging.sendMsg(player, Colors.strip(Translation.of("msg_latest_version", plugin.getVersion(), TownyUpdateChecker.getNewVersion())));
+				} else {
+					TownyMessaging.sendMsg(player, towny_version);
+					
+					if (TownyUpdateChecker.hasCheckedSuccessfully())
+						TownyMessaging.sendMsg(player, Translation.of("msg_up_to_date"));
+				}
 			} else if (split[0].equalsIgnoreCase("war")) {
 				if (!permSource.testPermission(player, PermissionNodes.TOWNY_COMMAND_TOWNY_WAR.getNode(split[0].toLowerCase())))
 					throw new TownyException(Translation.of("msg_err_command_disable"));
