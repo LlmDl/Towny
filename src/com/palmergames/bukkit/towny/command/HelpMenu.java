@@ -815,8 +815,8 @@ public enum HelpMenu {
 		@Override
 		protected MenuBuilder load() {
 			return new MenuBuilder("plot trust")
-				.add("", "add [resident]")
-				.add("", "remove [resident]");
+				.add("add [resident]", "")
+				.add("remove [resident]", "");
 		}
 	},
 	
@@ -824,8 +824,8 @@ public enum HelpMenu {
 		@Override
 		protected MenuBuilder load() {
 			return new MenuBuilder("town trust")
-				.add("", "add [resident]")
-				.add("", "remove [resident]");
+				.add("add [resident]", "")
+				.add("remove [resident]", "");
 		}
 	};
 
