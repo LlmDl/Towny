@@ -798,6 +798,35 @@ public enum HelpMenu {
 				.add("", "/plot jailcell", "add", "Adds a JailCell where you stand.")
 				.add("", "/plot jailcell", "remove", "Removes a JailCell where you stand.");
 		}
+	},
+	
+	PLOT_PERM_HELP {
+		@Override
+		protected MenuBuilder load() {
+			return new MenuBuilder("plot perm")
+				.add("", "/plot perm", "hud", "Opens the permissions hud.")
+				.add("", "/plot perm", "remove [resident]", "Removes permission overrides for a player.")
+				.add("", "/plot perm", "add [resident]", "Adds default permission overrides for a player.")
+				.add("", "/plot perm", "gui", "Opens the permission editor gui.");
+		}
+	},
+	
+	PLOT_TRUST_HELP {
+		@Override
+		protected MenuBuilder load() {
+			return new MenuBuilder("plot trust")
+				.add("", "add [resident]")
+				.add("", "remove [resident]");
+		}
+	},
+	
+	TOWN_TRUST_HELP {
+		@Override
+		protected MenuBuilder load() {
+			return new MenuBuilder("town trust")
+				.add("", "add [resident]")
+				.add("", "remove [resident]");
+		}
 	};
 
 

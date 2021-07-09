@@ -20,6 +20,10 @@ import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class TownBlock extends TownyObject {
@@ -35,6 +39,8 @@ public class TownBlock extends TownyObject {
 	private PlotGroup plotGroup;
 	private long claimedAt;
 	private Jail jail;
+	private final Map<Resident, PermissionData> permissionOverrides = new HashMap<>();
+	private List<Resident> trustedResidents = new ArrayList<>();
 
 	//Plot level permissions
 	protected TownyPermission permissions = new TownyPermission();
@@ -62,6 +68,8 @@ public class TownBlock extends TownyObject {
 
 			if (updateClaimedAt)
 				setClaimedAt(System.currentTimeMillis());
+			
+			permissionOverrides.clear();
 		} catch (AlreadyRegisteredException | NullPointerException ignored) {}
 	}
 
@@ -104,6 +112,7 @@ public class TownBlock extends TownyObject {
 			Bukkit.getPluginManager().callEvent(new PlotChangeOwnerEvent(this.resident, resident, this));
 		}
 		this.resident = resident;
+		permissionOverrides.clear();
 	}
 
 	public Resident getResident() throws NotRegisteredException {
@@ -452,5 +461,35 @@ public class TownBlock extends TownyObject {
 
 	public void setClaimedAt(long claimedAt) {
 		this.claimedAt = claimedAt;
+	}
+
+	public Map<Resident, PermissionData> getPermissionOverrides() {
+		return permissionOverrides;
+	}
+
+	public List<Resident> getTrustedResidents() {
+		return trustedResidents;
+	}
+	
+	public boolean hasTrustedResident(Resident resident) {
+		return trustedResidents.contains(resident);
+	}
+	
+	public void addTrustedResident(Resident resident) throws AlreadyRegisteredException {
+		if (trustedResidents.contains(resident))
+			throw new AlreadyRegisteredException();
+		
+		trustedResidents.add(resident);
+	}
+	
+	public void removeTrustedResident(Resident resident) {
+		trustedResidents.remove(resident);
+	}
+	
+	public boolean hasResident(Resident resident) {
+		if (this.resident == null || resident == null)
+			return false;
+		
+		return resident.equals(this.resident);
 	}
 }

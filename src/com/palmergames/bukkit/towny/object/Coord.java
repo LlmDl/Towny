@@ -116,7 +116,7 @@ public class Coord {
 	@Override
 	public String toString() {
 
-		return getX() + "," + getZ();
+		return getX() + ", " + getZ();
 	}
 
 	public static int getCellSize() {

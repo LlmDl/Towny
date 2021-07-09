@@ -119,6 +119,7 @@ public enum PermissionNodes {
 		TOWNY_COMMAND_TOWN_JAIL("towny.command.town.jail"),
 		TOWNY_COMMAND_TOWN_JAIL_LIST("towny.command.town.jail.list"),
 		TOWNY_COMMAND_TOWN_UNJAIL("towny.command.town.unjail"),
+		TOWNY_COMMAND_TOWN_TRUST("towny.command.town.trust"),
 		
 		// Covers all assignable ranks
 		TOWNY_COMMAND_TOWN_RANK("towny.command.town.rank.*"),
@@ -186,8 +187,13 @@ public enum PermissionNodes {
 		TOWNY_COMMAND_PLOT_NOTFORSALE("towny.command.plot.notforsale"),
 		TOWNY_COMMAND_PLOT_FORSALE("towny.command.plot.forsale"),
 		TOWNY_COMMAND_PLOT_JAILCELL("towny.command.plot.jailcell"),
-		TOWNY_COMMAND_PLOT_PERM("towny.command.plot.perm"),
-		TOWNY_COMMAND_PLOT_PERM_HUD("towny.command.plot.perm.hud"),
+		TOWNY_COMMAND_PLOT_TRUST("towny.command.plot.trust"),
+		TOWNY_COMMAND_PLOT_PERM("towny.command.plot.perm.*"),
+			TOWNY_COMMAND_PLOT_PERM_INFO("towny.command.plot.perm"),
+			TOWNY_COMMAND_PLOT_PERM_HUD("towny.command.plot.perm.hud"),
+			TOWNY_COMMAND_PLOT_PERM_GUI("towny.command.plot.perm.gui"),
+			TOWNY_COMMAND_PLOT_PERM_ADD("towny.command.plot.perm.add"),
+			TOWNY_COMMAND_PLOT_PERM_REMOVE("towny.command.plot.perm.remove"),
 		
 		TOWNY_COMMAND_PLOT_TOGGLE("towny.command.plot.toggle.*"),
 			TOWNY_COMMAND_PLOT_TOGGLE_PVP("towny.command.plot.toggle.pvp"),
@@ -254,6 +260,7 @@ public enum PermissionNodes {
     	TOWNY_COMMAND_TOWNYADMIN_PLOT_CLAIM("towny.command.townyadmin.plot.claim"),
 		TOWNY_COMMAND_TOWNYADMIN_PLOT_META("towny.command.townyadmin.plot.meta"),
 		TOWNY_COMMAND_TOWNYADMIN_PLOT_CLAIMEDAT("towny.command.townyadmin.plot.claimedat"),
+		TOWNY_COMMAND_TOWNYADMIN_PLOT_TRUST("towny.command.townyadmin.plot.trust"),
 	
 	TOWNY_COMMAND_TOWNYADMIN_RESIDENT("towny.command.townyadmin.resident.*"),
 		TOWNY_COMMMAND_TOWNYADMIN_RESIDENT_RENAME("towny.command.townyadmin.resident.rename"),
@@ -271,6 +278,7 @@ public enum PermissionNodes {
 		TOWNY_COMMAND_TOWNYADMIN_TOWN_SPAWN_FREECHARGE("towny.command.townyadmin.town.spawn.freecharge"),
 	    TOWNY_COMMAND_TOWNYADMIN_TOWN_META("towny.command.townyadmin.town.meta"),
 	    TOWNY_COMMAND_TOWNYADMIN_TOWN_BANKHISTORY("towny.command.townyadmin.town.bankhistory"),
+		TOWNY_COMMAND_TOWNYADMIN_TOWN_TRUST("towny.command.townyadmin.town.trust"),
 	
 	TOWNY_COMMAND_TOWNYADMIN_NATION("towny.command.townyadmin.nation.*"),
 		TOWNY_COMMAND_TOWNYADMIN_NATION_NEW("towny.command.townyadmin.nation.new"),

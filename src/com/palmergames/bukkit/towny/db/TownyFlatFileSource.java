@@ -1,6 +1,8 @@
 package com.palmergames.bukkit.towny.db;
 
+import com.google.gson.Gson;
 import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -10,6 +12,7 @@ import com.palmergames.bukkit.towny.exceptions.InvalidNameException;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.PermissionData;
 import com.palmergames.bukkit.towny.object.PlotGroup;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -35,6 +38,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public final class TownyFlatFileSource extends TownyDatabaseHandler {
@@ -578,8 +582,9 @@ public final class TownyFlatFileSource extends TownyDatabaseHandler {
 					}
 				}
 
-				line = "townBoard";
-				town.setBoard(keys.get("townBoard"));
+				line = keys.get("townBoard");
+				if (line != null)
+					town.setBoard(line);
 
 				line = keys.get("tag");
 				if (line != null)
@@ -902,6 +907,14 @@ public final class TownyFlatFileSource extends TownyDatabaseHandler {
 					UUID uuid = UUID.fromString(line);
 					if (TownyUniverse.getInstance().hasJail(uuid))
 						town.setPrimaryJail(TownyUniverse.getInstance().getJail(uuid));
+				}
+				
+				line = keys.get("trustedResidents");
+				if (line != null) {
+					for (Resident resident : getResidents(line.split(",")))
+						try {
+							town.addTrustedResident(resident);
+						} catch (AlreadyRegisteredException ignored) {}
 				}
 
 			} catch (Exception e) {
@@ -1568,6 +1581,27 @@ public final class TownyFlatFileSource extends TownyDatabaseHandler {
 						townBlock.setPlotObjectGroup(group);
 					}
 
+					line = keys.get("trustedResidents");
+					if (line != null) {
+						for (Resident resident : getResidents(line.split(",")))
+							try {
+								townBlock.addTrustedResident(resident);
+							} catch (AlreadyRegisteredException ignored) {}
+					}
+					
+					line = keys.get("customPermissionData");
+					if (line != null) {
+						Map<String, String> map = new Gson().fromJson(line, Map.class);
+						
+						for (Map.Entry<String, String> entry : map.entrySet()) {
+							Resident resident = TownyAPI.getInstance().getResident(entry.getKey());
+							if (resident == null)
+								continue;
+							
+							townBlock.getPermissionOverrides().put(resident, new PermissionData(entry.getValue()));
+						}
+					}
+
 				} catch (Exception e) {
 					TownyMessaging.sendErrorMsg(Translation.of("flatfile_err_exception_reading_townblock_file_at_line", path, line));
 					return false;
@@ -1854,6 +1888,9 @@ public final class TownyFlatFileSource extends TownyDatabaseHandler {
 		// Primary Jail
 		if (town.getPrimaryJail() != null)
 			list.add("primaryJail=" + town.getPrimaryJail().getUUID());
+		
+		list.add("trustedResidents=" + StringMgmt.join(town.getTrustedResidents(), ","));
+		
 		/*
 		 *  Make sure we only save in async
 		 */
@@ -2134,8 +2171,16 @@ public final class TownyFlatFileSource extends TownyDatabaseHandler {
 			groupID.append(townBlock.getPlotObjectGroup().getID());
 		}
 		
-		list.add("groupID=" + groupID.toString());
+		list.add("groupID=" + groupID);
 		
+		list.add("trustedResidents=" + StringMgmt.join(townBlock.getTrustedResidents(), ","));
+		
+		Map<String, String> stringMap = new HashMap<>();
+		for (Map.Entry<Resident, PermissionData> entry : townBlock.getPermissionOverrides().entrySet()) {
+			stringMap.put(entry.getKey().getName(), entry.getValue().toString());
+		}
+		
+		list.add("customPermissionData=" + new Gson().toJson(stringMap));
 		
 		/*
 		 *  Make sure we only save in async

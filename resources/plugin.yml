@@ -338,6 +338,7 @@ permissions:
             towny.command.town.unclaim.*: true
             towny.command.town.merge: true
             towny.command.town.unjail: true
+            towny.command.town.trust: true
 
     towny.command.town.list:
         description: Users are able to use all the various methods of sorting the town list.
@@ -461,12 +462,12 @@ permissions:
             towny.command.plot.forsale: true
             towny.command.plot.jailcell: true
             towny.command.plot.notforsale: true
-            towny.command.plot.perm: true
-            towny.command.plot.perm.hud: true
+            towny.command.plot.perm.*: true
             towny.command.plot.toggle.*: true
             towny.command.plot.set.*: true
             towny.command.plot.unclaim: true
             towny.command.plot.group.*: true
+            towny.command.plot.trust: true
 
     towny.command.plot.toggle.*:
         description: User can toggle plot settings.
@@ -493,6 +494,16 @@ permissions:
             towny.command.plot.set.shop: true
             towny.command.plot.set.spleef: true
             towny.command.plot.set.wilds: true
+
+    towny.command.plot.perm.*:
+        description: User can access all plot perm commands.
+        default: false
+        children:
+            towny.command.plot.perm: true
+            towny.command.plot.perm.hud: true
+            towny.command.plot.perm.gui: true
+            towny.command.plot.perm.add: true
+            towny.command.plot.perm.remove: true
 
     towny.command.plot.group.*:
         description: User can access the plot group command.
@@ -604,6 +615,7 @@ permissions:
             towny.command.townyadmin.town.toggle: true
             towny.command.townyadmin.town.meta: true
             towny.command.townyadmin.town.bankhistory: true
+            towny.command.townyadmin.town.trust: true
 
     towny.command.townyadmin.nation.*:
         description: User can access the admin nation commands.
@@ -627,6 +639,7 @@ permissions:
             towny.command.townyadmin.plot.claim: true
             towny.command.townyadmin.plot.meta: true
             towny.command.townyadmin.plot.claimedat: true
+            towny.command.townyadmin.plot.trust: true
 
     towny.command.townyadmin.toggle.*:
         description: User can access the admin toggle commands.
