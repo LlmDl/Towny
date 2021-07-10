@@ -4,8 +4,8 @@ import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.object.PermissionData;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.TownBlock;
-import com.palmergames.bukkit.towny.utils.PermissionUtil;
-import com.palmergames.bukkit.towny.utils.PermissionUtil.SetPermissionType;
+import com.palmergames.bukkit.towny.utils.PermissionGUIUtil;
+import com.palmergames.bukkit.towny.utils.PermissionGUIUtil.SetPermissionType;
 
 import org.bukkit.inventory.Inventory;
 
@@ -25,7 +25,7 @@ public class EditGUI extends PermissionGUI {
 	public void saveChanges() {
 		SetPermissionType[] newTypes = new SetPermissionType[4];
 		for (int i = 0; i < 4; i++) {
-			switch (getInventory().getItem(PermissionUtil.getWoolSlots()[i]).getType()) {
+			switch (getInventory().getItem(PermissionGUIUtil.getWoolSlots()[i]).getType()) {
 				case LIME_WOOL:
 					newTypes[i] = SetPermissionType.SET;
 					break;
@@ -46,7 +46,7 @@ public class EditGUI extends PermissionGUI {
 	}
 
 	public void exitScreen() {
-		PermissionUtil.openPermissionGUI(editor, super.getTownBlock());
+		PermissionGUIUtil.openPermissionGUI(editor, super.getTownBlock());
 	}
 	
 	public void deleteResident() {

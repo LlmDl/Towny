@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-public class PermissionUtil {
+public class PermissionGUIUtil {
 	private static final String GUI_NAME = Translation.of("permission_gui_header");
 	private static final SetPermissionType[] defaultTypes = new SetPermissionType[]{SetPermissionType.UNSET, SetPermissionType.UNSET, SetPermissionType.UNSET, SetPermissionType.UNSET};
 	private static final int[] woolSlots = new int[]{21, 23, 30, 32};

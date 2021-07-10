@@ -1594,7 +1594,13 @@ public final class TownyFlatFileSource extends TownyDatabaseHandler {
 						Map<String, String> map = new Gson().fromJson(line, Map.class);
 						
 						for (Map.Entry<String, String> entry : map.entrySet()) {
-							Resident resident = TownyAPI.getInstance().getResident(entry.getKey());
+							Resident resident;
+							try {
+								resident = TownyAPI.getInstance().getResident(UUID.fromString(entry.getKey()));
+							} catch (IllegalArgumentException e) {
+								continue;
+							}
+							
 							if (resident == null)
 								continue;
 							
@@ -2177,7 +2183,7 @@ public final class TownyFlatFileSource extends TownyDatabaseHandler {
 		
 		Map<String, String> stringMap = new HashMap<>();
 		for (Map.Entry<Resident, PermissionData> entry : townBlock.getPermissionOverrides().entrySet()) {
-			stringMap.put(entry.getKey().getName(), entry.getValue().toString());
+			stringMap.put(entry.getKey().getUUID().toString(), entry.getValue().toString());
 		}
 		
 		list.add("customPermissionData=" + new Gson().toJson(stringMap));

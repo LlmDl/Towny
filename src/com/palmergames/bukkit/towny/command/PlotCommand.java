@@ -50,7 +50,7 @@ import com.palmergames.bukkit.towny.utils.AreaSelectionUtil;
 import com.palmergames.bukkit.towny.utils.CombatUtil;
 import com.palmergames.bukkit.towny.utils.NameUtil;
 import com.palmergames.bukkit.towny.utils.OutpostUtil;
-import com.palmergames.bukkit.towny.utils.PermissionUtil;
+import com.palmergames.bukkit.towny.utils.PermissionGUIUtil;
 import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.bukkit.util.Colors;
@@ -1895,7 +1895,7 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 					return;
 				}
 
-				PermissionUtil.openPermissionGUI(resident, townBlock);
+				PermissionGUIUtil.openPermissionGUI(resident, townBlock);
 			} else if (args[0].equalsIgnoreCase("remove")) {
 				if (args.length < 2) {
 					HelpMenu.PLOT_PERM_HELP.send(player);
@@ -1934,7 +1934,7 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 					return;
 				}
 				
-				townBlock.getPermissionOverrides().put(resident, new PermissionData(PermissionUtil.getDefaultTypes(), player.getName()));
+				townBlock.getPermissionOverrides().put(resident, new PermissionData(PermissionGUIUtil.getDefaultTypes(), player.getName()));
 				townBlock.save();
 				
 				TownyMessaging.sendMsg(player, Translation.of("msg_overrides_added", resident.getName()));

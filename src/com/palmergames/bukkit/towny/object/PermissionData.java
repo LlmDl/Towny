@@ -1,6 +1,6 @@
 package com.palmergames.bukkit.towny.object;
 
-import com.palmergames.bukkit.towny.utils.PermissionUtil.SetPermissionType;
+import com.palmergames.bukkit.towny.utils.PermissionGUIUtil.SetPermissionType;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

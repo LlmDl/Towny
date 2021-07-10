@@ -23,7 +23,7 @@ import com.palmergames.bukkit.towny.object.WorldCoord;
 import com.palmergames.bukkit.towny.permissions.PermissionNodes;
 import com.palmergames.bukkit.towny.regen.TownyRegenAPI;
 import com.palmergames.bukkit.towny.war.eventwar.War;
-import com.palmergames.bukkit.towny.utils.PermissionUtil.SetPermissionType;
+import com.palmergames.bukkit.towny.utils.PermissionGUIUtil.SetPermissionType;
 
 import net.citizensnpcs.api.CitizensAPI;
 

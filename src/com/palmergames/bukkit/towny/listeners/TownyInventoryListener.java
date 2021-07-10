@@ -3,7 +3,7 @@ package com.palmergames.bukkit.towny.listeners;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.object.gui.EditGUI;
 import com.palmergames.bukkit.towny.object.gui.PermissionGUI;
-import com.palmergames.bukkit.towny.utils.PermissionUtil;
+import com.palmergames.bukkit.towny.utils.PermissionGUIUtil;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import org.bukkit.ChatColor;
@@ -78,7 +78,7 @@ public class TownyInventoryListener implements Listener {
 		} else if (event.getInventory().getHolder() instanceof PermissionGUI) {
 			PermissionGUI permissionGUI = (PermissionGUI) event.getInventory().getHolder();
 			if (event.getCurrentItem().getType() == Material.PLAYER_HEAD && permissionGUI.canEdit()) {
-				PermissionUtil.openPermissionEditorGUI(resident, permissionGUI.getTownBlock(), event.getCurrentItem());
+				PermissionGUIUtil.openPermissionEditorGUI(resident, permissionGUI.getTownBlock(), event.getCurrentItem());
 				Towny.getAdventure().player(player).playSound(clickSound);
 			} else {
 				int currentPage = resident.getGUIPageNum();
