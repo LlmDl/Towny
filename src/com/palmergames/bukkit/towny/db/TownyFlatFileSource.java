@@ -910,8 +910,8 @@ public final class TownyFlatFileSource extends TownyDatabaseHandler {
 				}
 				
 				line = keys.get("trustedResidents");
-				if (line != null) {
-					for (Resident resident : getResidents(line.split(",")))
+				if (line != null && !line.isEmpty()) {
+					for (Resident resident : getResidents(toUUIDArray(line.split(","))))
 						try {
 							town.addTrustedResident(resident);
 						} catch (AlreadyRegisteredException ignored) {}
@@ -1582,15 +1582,15 @@ public final class TownyFlatFileSource extends TownyDatabaseHandler {
 					}
 
 					line = keys.get("trustedResidents");
-					if (line != null) {
-						for (Resident resident : getResidents(line.split(",")))
+					if (line != null && !line.isEmpty()) {
+						for (Resident resident : getResidents(toUUIDArray(line.split(","))))
 							try {
 								townBlock.addTrustedResident(resident);
 							} catch (AlreadyRegisteredException ignored) {}
 					}
 					
 					line = keys.get("customPermissionData");
-					if (line != null) {
+					if (line != null && !line.isEmpty()) {
 						Map<String, String> map = new Gson().fromJson(line, Map.class);
 						
 						for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -1889,7 +1889,7 @@ public final class TownyFlatFileSource extends TownyDatabaseHandler {
 		if (town.getPrimaryJail() != null)
 			list.add("primaryJail=" + town.getPrimaryJail().getUUID());
 		
-		list.add("trustedResidents=" + StringMgmt.join(town.getTrustedResidents(), ","));
+		list.add("trustedResidents=" + StringMgmt.join(toUUIDList(town.getTrustedResidents()), ","));
 		
 		/*
 		 *  Make sure we only save in async
@@ -2173,7 +2173,7 @@ public final class TownyFlatFileSource extends TownyDatabaseHandler {
 		
 		list.add("groupID=" + groupID);
 		
-		list.add("trustedResidents=" + StringMgmt.join(townBlock.getTrustedResidents(), ","));
+		list.add("trustedResidents=" + StringMgmt.join(toUUIDList(townBlock.getTrustedResidents()), ","));
 		
 		Map<String, String> stringMap = new HashMap<>();
 		for (Map.Entry<Resident, PermissionData> entry : townBlock.getPermissionOverrides().entrySet()) {

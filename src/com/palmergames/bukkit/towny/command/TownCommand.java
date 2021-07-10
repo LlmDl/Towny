@@ -4105,7 +4105,7 @@ public class TownCommand extends BaseCommand implements CommandExecutor {
 		}
 		
 		Resident resident = TownyAPI.getInstance().getResident(args[1]);
-		if (resident == null) {
+		if (resident == null || resident.isNPC()) {
 			TownyMessaging.sendErrorMsg(player, Translation.of("msg_err_not_registered_1", args[1]));
 			return;
 		}

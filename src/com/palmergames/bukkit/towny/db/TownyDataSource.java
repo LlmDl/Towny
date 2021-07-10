@@ -292,6 +292,8 @@ public abstract class TownyDataSource {
 	abstract public List<Jail> getAllJails();
 
 	abstract public List<Resident> getResidents(String[] names);
+	
+	abstract public List<Resident> getResidents(UUID[] uuids);
 
 	/**
 	 * @deprecated as of 0.96.6.0. Use {@link TownyUniverse#getResident(String)} instead.

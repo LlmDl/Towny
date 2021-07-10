@@ -1156,7 +1156,7 @@ public final class TownySQLSource extends TownyDatabaseHandler {
 			line = rs.getString("trustedResidents");
 			if (line != null && !line.isEmpty()) {
 				search = (line.contains("#")) ? "#" : ",";
-				for (Resident resident : getResidents(line.split(search)))
+				for (Resident resident : getResidents(toUUIDArray(line.split(search))))
 					try {
 						town.addTrustedResident(resident);
 					} catch (AlreadyRegisteredException ignored) {}
@@ -1790,7 +1790,7 @@ public final class TownySQLSource extends TownyDatabaseHandler {
 				line = rs.getString("trustedResidents");
 				if (line != null && !line.isEmpty()) {
 					String search = (line.contains("#")) ? "#" : ",";
-					for (Resident resident : getResidents(line.split(search))) {
+					for (Resident resident : getResidents(toUUIDArray(line.split(search)))) {
 						try {
 							townBlock.addTrustedResident(resident);
 						} catch (AlreadyRegisteredException ignored) {}
@@ -2115,7 +2115,7 @@ public final class TownySQLSource extends TownyDatabaseHandler {
 			if (town.getPrimaryJail() != null)
 				twn_hm.put("primaryJail", town.getPrimaryJail().getUUID());
 			
-			twn_hm.put("trustedResidents", StringMgmt.join(town.getTrustedResidents(), "#"));
+			twn_hm.put("trustedResidents", StringMgmt.join(toUUIDList(town.getTrustedResidents()), "#"));
 			
 			UpdateDB("TOWNS", twn_hm, Collections.singletonList("name"));
 			return true;
@@ -2332,7 +2332,7 @@ public final class TownySQLSource extends TownyDatabaseHandler {
 			else
 				tb_hm.put("metadata", "");
 			
-			tb_hm.put("trustedResidents", StringMgmt.join(townBlock.getTrustedResidents(), "#"));
+			tb_hm.put("trustedResidents", StringMgmt.join(toUUIDList(townBlock.getTrustedResidents()), "#"));
 
 			Map<String, String> stringMap = new HashMap<>();
 			for (Map.Entry<Resident, PermissionData> entry : townBlock.getPermissionOverrides().entrySet()) {
