@@ -492,4 +492,6 @@ public class TownBlock extends TownyObject {
 		
 		return resident.equals(this.resident);
 	}
+	
+	//TODO: Figure out how we're going to handle permissionOverrides/Trusted residents on the PlotGroup level.
 }
