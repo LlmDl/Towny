@@ -804,10 +804,10 @@ public enum HelpMenu {
 		@Override
 		protected MenuBuilder load() {
 			return new MenuBuilder("plot perm")
-				.add("", "/plot perm", "hud", "Opens the permissions hud.")
-				.add("", "/plot perm", "remove [resident]", "Removes permission overrides for a player.")
-				.add("", "/plot perm", "add [resident]", "Adds default permission overrides for a player.")
-				.add("", "/plot perm", "gui", "Opens the permission editor gui.");
+				.add("hud", "Opens the permissions hud.")
+				.add("remove [resident]", "Removes permission overrides for a player.")
+				.add("add [resident]", "Adds default permission overrides for a player.")
+				.add("gui", "Opens the permission editor gui.");
 		}
 	},
 	
