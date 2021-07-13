@@ -125,7 +125,7 @@ public class MapHUD {
 					}
 
 					// Registered town block
-					if (townblock.getPlotPrice() != -1) {
+					if (townblock.getPlotPrice() != -1 || townblock.hasPlotObjectGroup() && townblock.getPlotObjectGroup().getPrice() != -1) {
 						// override the colour if it's a shop plot for sale
 						if (townblock.getType().equals(TownBlockType.COMMERCIAL))
 							map[y][x] = Colors.Blue;

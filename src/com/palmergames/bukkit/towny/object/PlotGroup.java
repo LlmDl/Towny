@@ -113,6 +113,10 @@ public class PlotGroup extends ObjectGroup implements TownBlockOwner, Savable {
 	public Collection<TownBlock> getTownBlocks() {
 		return Collections.unmodifiableCollection(townBlocks);
 	}
+	
+	public boolean hasTownBlocks() {
+		return townBlocks != null && !townBlocks.isEmpty();
+	}
 
 	@Override
 	public boolean hasTownBlock(TownBlock townBlock) {
@@ -137,6 +141,7 @@ public class PlotGroup extends ObjectGroup implements TownBlockOwner, Savable {
 		this.permissions.load(line);
 	}
 
+	@Override
 	public TownyPermission getPermissions() {
 		return permissions;
 	}

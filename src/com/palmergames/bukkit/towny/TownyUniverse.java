@@ -86,6 +86,9 @@ public class TownyUniverse {
 	private final Map<Block, SpawnPoint> spawnPoints = new ConcurrentHashMap<>(); 
     private final List<Resident> jailedResidents = new ArrayList<>();
     private final Map<UUID, Jail> jailUUIDMap = new ConcurrentHashMap<>();
+    
+    private final Map<UUID, PlotGroup> plotGroupUUIDMap = new ConcurrentHashMap<>();
+    
     private final Map<WorldCoord, TownyMapData> wildernessMapDataMap = new ConcurrentHashMap<WorldCoord, TownyMapData>();
     private final String rootFolder;
     private TownyDataSource dataSource;
@@ -204,6 +207,7 @@ public class TownyUniverse {
         townBlocks.clear();
         spawnPoints.clear();
         jailUUIDMap.clear();
+        plotGroupUUIDMap.clear();
         wildernessMapDataMap.clear();
     }
     
@@ -911,6 +915,56 @@ public class TownyUniverse {
      * PlotGroup Stuff.
      */
 
+    /**
+     * Used in loading only.
+     * @param uuid UUID to assign to the PlotGroup.
+     */
+    public void newPlotGroupInternal(String uuid) {
+    	PlotGroup group = new PlotGroup(UUID.fromString(uuid), null, null);
+    	registerGroup(group);
+    }
+    
+	
+	public void registerGroup(PlotGroup group) {
+		plotGroupUUIDMap.put(group.getID(), group);
+	}
+
+	public void unregisterGroup(PlotGroup group) {
+		group.getTown().removePlotGroup(group);
+		plotGroupUUIDMap.remove(group.getID());
+	}
+
+	/**
+	 * Get all the plot object groups from all towns
+	 * Returns a collection that does not reflect any group additions/removals
+	 * 
+	 * @return collection of PlotObjectGroup
+	 */
+	public Collection<PlotGroup> getGroups() {
+    	return new ArrayList<>(plotGroupUUIDMap.values());
+	}
+
+	/**
+	 * Gets the plot group from the town name and the plot group UUID 
+	 * 
+	 * @param groupID UUID of the plot group
+	 * @return PlotGroup if found, null if none found.
+	 */
+	@Nullable
+	public PlotGroup getGroup(UUID groupID) {
+		return plotGroupUUIDMap.get(groupID);
+	}
+
+	/**
+	 * 
+	 * @param town Town to create a group for
+	 * @param name String name of plogroup
+	 * @param id UUID of the group
+	 * @return PlotGroup 
+	 * @throws AlreadyRegisteredException When group name is already taken.
+	 * @Deprecated as of 0.97.0.11 for being unused.
+	 */
+    @Deprecated
 	public PlotGroup newGroup(Town town, String name, UUID id) throws AlreadyRegisteredException {
     	
     	// Create new plot group.
@@ -926,11 +980,14 @@ public class TownyUniverse {
 		return newGroup;
 	}
 
-	public void removeGroup(PlotGroup group) {
-		group.getTown().removePlotGroup(group);
-		
-	}
-
+    /**
+     * 
+     * @param townName String name of Town.
+     * @param groupID UUID of the PlotGroup
+     * @return true if the Town has the given PlotGroup.
+     * @deprecated as of 0.97.0.11 for being unused.
+     */
+	@Deprecated
     public boolean hasGroup(String townName, UUID groupID) {
 		Town t = townNameMap.get(townName);
 		
@@ -941,6 +998,14 @@ public class TownyUniverse {
 		return false;
 	}
 
+    /**
+     * 
+     * @param townName String name of Town.
+     * @param groupName String name of the PlotGroup
+     * @return true if the Town has the given PlotGroup.
+     * @deprecated as of 0.97.0.11 for being unused.
+     */
+	@Deprecated
 	public boolean hasGroup(String townName, String groupName) {
 		Town t = townNameMap.get(townName);
 
@@ -952,47 +1017,14 @@ public class TownyUniverse {
 	}
 
 	/**
-	 * Get all the plot object groups from all towns
-	 * Returns a collection that does not reflect any group additions/removals
-	 * 
-	 * @return collection of PlotObjectGroup
-	 */
-	public Collection<PlotGroup> getGroups() {
-    	List<PlotGroup> groups = new ArrayList<>();
-    	
-		for (Town town : townNameMap.values()) {
-			if (town.hasPlotGroups()) {
-				groups.addAll(town.getPlotObjectGroups());
-			}
-		}
-		
-		return groups;
-	}
-
-	/**
-	 * Gets the plot group from the town name and the plot group UUID 
-	 * 
-	 * @param townName Town name
-	 * @param groupID UUID of the plot group
-	 * @return PlotGroup if found, null if none found.
-	 */
-	public PlotGroup getGroup(String townName, UUID groupID) {
-		Town t = getTown(townName);
-
-		if (t != null) {
-			return t.getObjectGroupFromID(groupID);
-		}
-		
-		return null;
-	}
-
-	/**
 	 * Gets the plot group from the town name and the plot group name
 	 * 
 	 * @param townName Town Name
 	 * @param groupName Plot Group Name
 	 * @return the plot group if found, otherwise null
+	 * @deprecated as of 0.97.0.11 for being unused.
 	 */
+	@Deprecated
 	public PlotGroup getGroup(String townName, String groupName) {
 		Town t = townNameMap.get(townName);
 

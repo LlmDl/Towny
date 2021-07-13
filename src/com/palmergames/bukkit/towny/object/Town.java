@@ -1186,18 +1186,6 @@ public class Town extends Government implements TownBlockOwner {
 		return primaryJail;
 	}
 	
-	public List<TownBlock> getTownBlocksForPlotGroup(PlotGroup group) {
-		ArrayList<TownBlock> retVal = new ArrayList<>();
-		TownyMessaging.sendErrorMsg(group.toString());
-		
-		for (TownBlock townBlock : getTownBlocks()) {
-			if (townBlock.hasPlotObjectGroup() && townBlock.getPlotObjectGroup().equals(group))
-				retVal.add(townBlock);
-		}
-		
-		return retVal;
-	}
-	
 	public void renamePlotGroup(String oldName, PlotGroup group) {
 		plotGroups.remove(oldName);
 		plotGroups.put(group.getName(), group);
@@ -1213,9 +1201,10 @@ public class Town extends Government implements TownBlockOwner {
 	
 	public void removePlotGroup(PlotGroup plotGroup) {
 		if (hasPlotGroups() && plotGroups.remove(plotGroup.getName()) != null) {
-			for (TownBlock tb : getTownBlocks()) {
-				if (tb.hasPlotObjectGroup() && tb.getPlotObjectGroup().equals(plotGroup)) {
-					tb.getPlotObjectGroup().setID(null);
+			for (TownBlock tb : new ArrayList<>(plotGroup.getTownBlocks())) {
+				if (tb.hasPlotObjectGroup() && tb.getPlotObjectGroup().getID().equals(plotGroup.getID())) {
+					plotGroup.removeTownBlock(tb);
+					tb.removePlotObjectGroup();
 					tb.save();
 				}
 			}
@@ -1231,6 +1220,10 @@ public class Town extends Government implements TownBlockOwner {
 	}
 
 	// Method is inefficient compared to getting the group from name.
+	/**
+	 * @deprecated since 0.97.0.11 for being unused.
+	 */
+	@Deprecated
 	public PlotGroup getObjectGroupFromID(UUID ID) {
 		if (hasPlotGroups()) {
 			for (PlotGroup pg : getPlotGroups()) {
@@ -1246,26 +1239,15 @@ public class Town extends Government implements TownBlockOwner {
 		return plotGroups != null;
 	}
 
-	// Override default method for efficient access
 	public boolean hasPlotGroupName(String name) {
 		return hasPlotGroups() && plotGroups.containsKey(name);
 	}
 
+	@Nullable
 	public PlotGroup getPlotObjectGroupFromName(String name) {
-		if (hasPlotGroups()) {
+		if (hasPlotGroups() && hasPlotGroupName(name))
 			return plotGroups.get(name);
-		}
-		
 		return null;
-	}
-	
-	// Wraps other functions to provide a better naming scheme for the end developer.
-	public PlotGroup getPlotObjectGroupFromID(UUID ID) {
-		return getObjectGroupFromID(ID);
-	}
-	
-	public Collection<PlotGroup> getPlotObjectGroups() {
-		return getPlotGroups();
 	}
 
 	@Override

@@ -326,6 +326,7 @@ permissions:
             towny.command.town.othertown: true
             towny.command.town.outlaw: true
             towny.command.town.plots: true
+            towny.command.town.plotgrouplist: true
             towny.command.town.purge: true
             towny.command.town.rank.*: true
             towny.command.town.ranklist: true
@@ -499,6 +500,7 @@ permissions:
         default: false
         children:
             towny.command.plot.group.add: true
+            towny.command.plot.group.delete: true
             towny.command.plot.group.remove: true
             towny.command.plot.group.rename: true
             towny.command.plot.group.set: true

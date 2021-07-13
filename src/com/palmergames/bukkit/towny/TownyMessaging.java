@@ -3,6 +3,7 @@ package com.palmergames.bukkit.towny;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.invites.Invite;
 import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.PlotGroup;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.ResidentList;
 import com.palmergames.bukkit.towny.object.Town;
@@ -810,6 +811,50 @@ public class TownyMessaging {
 		
 		// Page navigation
 		TextComponent pageFooter = getPageNavigationFooter("towny:town jail list", page, "", total);
+		audience.sendMessage(pageFooter);
+	}
+	
+	public static void sendPlotGroupList(CommandSender sender, Town town, int page, int total) {
+		int groupCount = town.getPlotGroups().size();
+		int iMax = Math.min(page * 10,  groupCount);
+		List<PlotGroup> groups = new ArrayList<>(town.getPlotGroups());
+		
+		TextComponent[] groupsFormatted;
+		if ((page * 10) > groupCount) {
+			groupsFormatted = new TextComponent[groupCount % 10];
+		} else {
+			groupsFormatted = new TextComponent[10];
+		}
+		
+		String headerMsg = ChatColor.GOLD + "# " +
+				ChatColor.DARK_GRAY + "- "+
+				ChatColor.GREEN + "Group Name " +
+				ChatColor.DARK_GRAY + "- " +
+				ChatColor.YELLOW + "Plot Size " +
+				ChatColor.DARK_GRAY + "- " +
+				ChatColor.BLUE + "For Sale";
+		for (int i = (page - 1) * 10; i < iMax; i++) {
+			PlotGroup group = groups.get(i);
+			TextComponent name = Component.text(group.getFormattedName()).color(NamedTextColor.GREEN);
+			TextComponent size = Component.text(String.valueOf(group.getTownBlocks().size())).color(NamedTextColor.YELLOW);
+			TextComponent dash = Component.text(" - ").color(NamedTextColor.DARK_GRAY);
+			TextComponent line = Component.text(Integer.toString(i + 1)).color(NamedTextColor.GOLD);
+			line = line.append(dash).append(name).append(dash).append(size);
+			
+			if (TownyEconomyHandler.isActive() && group.getPrice() != -1)
+				line = line.append(dash).append(Component.text("(" + Translation.of("towny_map_forsale") + ": " + TownyEconomyHandler.getFormattedBalance(group.getPrice()) + ")").color(NamedTextColor.BLUE));
+
+			groupsFormatted[i % 10] = line;
+		}
+		Audience audience = Towny.getAdventure().sender(sender);
+		sender.sendMessage(ChatTools.formatTitle(town.getName() + " " + Translation.of("plotgroup_plu")));
+		sender.sendMessage(headerMsg);
+		for (TextComponent textComponent : groupsFormatted) {
+			audience.sendMessage(textComponent);
+		}
+		
+		// Page navigation
+		TextComponent pageFooter = getPageNavigationFooter("towny:town plotgrouplist " + town.getName(), page, "", total);
 		audience.sendMessage(pageFooter);
 	}
 	

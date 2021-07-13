@@ -119,6 +119,7 @@ public enum PermissionNodes {
 		TOWNY_COMMAND_TOWN_JAIL("towny.command.town.jail"),
 		TOWNY_COMMAND_TOWN_JAIL_LIST("towny.command.town.jail.list"),
 		TOWNY_COMMAND_TOWN_UNJAIL("towny.command.town.unjail"),
+		TOWNY_COMMAND_TOWN_PLOTGROUPLIST("towny.command.town.plotgrouplist"),
 		
 		// Covers all assignable ranks
 		TOWNY_COMMAND_TOWN_RANK("towny.command.town.rank.*"),
@@ -210,6 +211,7 @@ public enum PermissionNodes {
 		TOWNY_COMMAND_PLOT_GROUP("towny.command.plot.group.*"),
 		    TOWNY_COMMAND_PLOT_GROUP_ADD("towny.command.plot.group.add"),
 		    TOWNY_COMMAND_PLOT_GROUP_REMOVE("towny.command.plot.group.remove"),
+		    TOWNY_COMMAND_PLOT_GROUP_DELETE("towny.command.plot.group.delete"),
 		    TOWNY_COMMAND_PLOT_GROUP_RENAME("towny.command.plot.group.rename"),
 		    TOWNY_COMMAND_PLOT_GROUP_SET("towny.command.plot.group.set"),
 		    TOWNY_COMMAND_PLOT_GROUP_TOGGLE("towny.command.plot.group.toggle"),

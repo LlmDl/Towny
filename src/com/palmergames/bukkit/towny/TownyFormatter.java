@@ -120,7 +120,7 @@ public class TownyFormatter {
 		else
 			owner = town;
 
-		out.add(ChatTools.formatTitle(owner.getFormattedName() + ((BukkitTools.isOnline(owner.getName())) ? Translation.of("online") : "")));
+		out.add(ChatTools.formatTitle("(" + townBlock.getCoord().toString() + ") " + owner.getFormattedName() + ((BukkitTools.isOnline(owner.getName())) ? Translation.of("online") : "")));
 		if (!townBlock.getType().equals(TownBlockType.RESIDENTIAL))
 			out.add(Translation.of("status_plot_type") + townBlock.getType().toString());
 		out.add(Translation.of("status_perm") + ((owner instanceof Resident) ? townBlock.getPermissions().getColourString().replace("n", "t") : townBlock.getPermissions().getColourString().replace("f", "r")));
