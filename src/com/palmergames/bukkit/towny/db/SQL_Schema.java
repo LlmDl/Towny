@@ -174,6 +174,7 @@ public class SQL_Schema {
 		columns.add("`joinedNationAt` BIGINT NOT NULL");
 		columns.add("`primaryJail` VARCHAR(36) DEFAULT NULL");
 		columns.add("`movedHomeBlockAt` BIGINT NOT NULL");
+		columns.add("`trustedResidents` mediumtext DEFAULT NULL");
 		return columns;
 	}
 
@@ -230,6 +231,8 @@ public class SQL_Schema {
 		columns.add("`metadata` text DEFAULT NULL");
 		columns.add("`groupID` VARCHAR(36) DEFAULT NULL");
 		columns.add("`claimedAt` BIGINT NOT NULL");
+		columns.add("`trustedResidents` mediumtext DEFAULT NULL");
+		columns.add("`customPermissionData` mediumtext DEFAULT NULL");
 		return columns;
 	}
 

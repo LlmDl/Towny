@@ -23,6 +23,7 @@ import com.palmergames.bukkit.towny.object.WorldCoord;
 import com.palmergames.bukkit.towny.permissions.PermissionNodes;
 import com.palmergames.bukkit.towny.regen.TownyRegenAPI;
 import com.palmergames.bukkit.towny.war.eventwar.War;
+import com.palmergames.bukkit.towny.utils.PermissionGUIUtil.SetPermissionType;
 
 import net.citizensnpcs.api.CitizensAPI;
 
@@ -317,6 +318,12 @@ public class PlayerCacheUtil {
 			if (town.isMayor(resident))
 				return TownBlockStatus.TOWN_OWNER;
 			
+			if (town.hasTrustedResident(resident))
+				return TownBlockStatus.TOWN_TRUSTED;
+			
+			if (townBlock.hasTrustedResident(resident) && !townBlock.hasResident(resident))
+				return TownBlockStatus.PLOT_TRUSTED;
+			
 			// Resident Plot rights
 			if (townBlock.hasResident()) {
 				Resident owner = townBlock.getResidentOrNull();
@@ -489,6 +496,21 @@ public class PlayerCacheUtil {
 		 * Not going to be in the wilderness at this point.
 		 */
 		TownBlock townBlock = pos.getTownBlockOrNull();
+		
+		/*
+		 * Player has a permission override set.
+		 * 
+		 */
+		if (townBlock.getPermissionOverrides().containsKey(res) && townBlock.getPermissionOverrides().get(res).getPermissionTypes()[action.getIndex()] != SetPermissionType.UNSET) {
+			SetPermissionType type = townBlock.getPermissionOverrides().get(res).getPermissionTypes()[action.getIndex()];
+			if (type == SetPermissionType.NEGATED)
+				cacheBlockErrMsg(player, Translation.of("msg_cache_block_err", Translation.of(action.toString())));
+			
+			return type.equals(SetPermissionType.SET);				
+		}
+		
+		if (status == TownBlockStatus.PLOT_TRUSTED || status == TownBlockStatus.TOWN_TRUSTED)
+			return true;
 
 		/*
 		 * Handle Personally owned plots first.

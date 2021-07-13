@@ -65,9 +65,11 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.UUID;
@@ -376,6 +378,11 @@ public abstract class TownyDatabaseHandler extends TownyDataSource {
 				matches.add(matchRes);
 		}
 		return matches;
+	}
+	
+	@Override
+	public List<Resident> getResidents(UUID[] uuids) {
+		return Arrays.stream(uuids).filter(Objects::nonNull).map(universe::getResident).filter(Objects::nonNull).collect(Collectors.toList());
 	}
 
 	/**
@@ -1656,5 +1663,21 @@ public abstract class TownyDatabaseHandler extends TownyDataSource {
 
 		mergeInto.save();
 		TownyMessaging.sendGlobalMessage(Translation.of("msg_town_merge_success", mergeFrom.getName(), mayorName, mergeInto.getName()));
+	}
+	
+	public List<UUID> toUUIDList(List<Resident> residents) {
+		return residents.stream().filter(Resident::hasUUID).map(Resident::getUUID).collect(Collectors.toList());
+	}
+	
+	public UUID[] toUUIDArray(String[] uuidArray) {
+		UUID[] uuids = new UUID[uuidArray.length];
+		
+		for (int i = 0; i < uuidArray.length; i++) {
+			try {
+				uuids[i] = UUID.fromString(uuidArray[i]);
+			} catch (IllegalArgumentException ignored) {}
+		}
+		
+		return uuids;
 	}
 }

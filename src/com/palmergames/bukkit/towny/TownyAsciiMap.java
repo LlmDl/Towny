@@ -143,7 +143,7 @@ public class TownyAsciiMap {
 						.append(claimedAtComponent)
 						.append(Component.text(Translation.of("towny_map_detailed_information")).color(NamedTextColor.DARK_GREEN));
 
-					townyMap[y][x] = townyMap[y][x].hoverEvent(HoverEvent.showText(hoverComponent)).clickEvent(ClickEvent.runCommand("/towny:plot perm " + tby + " " + tbx));
+					townyMap[y][x] = townyMap[y][x].hoverEvent(HoverEvent.showText(hoverComponent)).clickEvent(ClickEvent.runCommand("/towny:plot info " + tby + " " + tbx));
 				} catch (TownyException e) {
 					// Unregistered town block (Wilderness)
 

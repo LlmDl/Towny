@@ -44,6 +44,7 @@ public class Town extends Government implements TownBlockOwner {
 
 	private final List<Resident> residents = new ArrayList<>();
 	private final List<Resident> outlaws = new ArrayList<>();
+	private final List<Resident> trustedResidents = new ArrayList<>();
 	private List<Location> outpostSpawns = new ArrayList<>();
 	private List<Jail> jails = null;
 	private HashMap<String, PlotGroup> plotGroups = null;
@@ -1428,5 +1429,24 @@ public class Town extends Government implements TownBlockOwner {
 		residents.clear();
 		residents.addAll(sortedResidents);
 		residentsSorted = true;
+	}
+
+	public List<Resident> getTrustedResidents() {
+		return trustedResidents;
+	}
+	
+	public boolean hasTrustedResident(Resident resident) {
+		return trustedResidents.contains(resident);
+	}
+	
+	public void addTrustedResident(Resident resident) throws AlreadyRegisteredException {
+		if (trustedResidents.contains(resident))
+			throw new AlreadyRegisteredException();
+		
+		trustedResidents.add(resident);
+	}
+	
+	public void removeTrustedResident(Resident resident) {
+		trustedResidents.remove(resident);
 	}
 }

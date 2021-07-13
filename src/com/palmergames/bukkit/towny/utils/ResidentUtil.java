@@ -137,15 +137,15 @@ public class ResidentUtil {
 	}
 
 	// This creates a blank page with the next and prev buttons
-	private static Inventory getBlankPage(String name) {
+	public static Inventory getBlankPage(String name) {
 		Inventory page = Bukkit.createInventory(null, 54, name);
 
-		ItemStack nextpage = new ItemStack(Material.PAPER);
+		ItemStack nextpage = new ItemStack(Material.ARROW);
 		ItemMeta meta = nextpage.getItemMeta();
 		meta.setDisplayName(Colors.Gold + "Next");
 		nextpage.setItemMeta(meta);
 
-		ItemStack prevpage = new ItemStack(Material.PAPER);
+		ItemStack prevpage = new ItemStack(Material.ARROW);
 		meta = prevpage.getItemMeta();
 		meta.setDisplayName(Colors.Gold + "Back");
 		prevpage.setItemMeta(meta);

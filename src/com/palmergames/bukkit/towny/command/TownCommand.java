@@ -161,7 +161,8 @@ public class TownCommand extends BaseCommand implements CommandExecutor {
 		"bankhistory",
 		"merge",
 		"jail",
-		"unjail"
+		"unjail",
+		"trust"
 		);
 	private static final List<String> townSetTabCompletes = Arrays.asList(
 		"board",
@@ -432,6 +433,13 @@ public class TownCommand extends BaseCommand implements CommandExecutor {
 							return Collections.singletonList("by");
 						case 3:
 							return NameUtil.filterByStart(townListTabCompletes, args[2]);
+					}
+				case "trust":
+					switch (args.length) {
+						case 2:
+							return NameUtil.filterByStart(Arrays.asList("add", "remove"), args[1]);
+						case 3:
+							return getTownyStartingWith(args[2], "r");
 					}
 				default:
 					if (args.length == 1)
@@ -807,6 +815,12 @@ public class TownCommand extends BaseCommand implements CommandExecutor {
 					
 					parseTownPurgeCommand(player, StringMgmt.remFirstArg(split));
 
+				} else if (split[0].equalsIgnoreCase("trust")) {	
+					if (!permSource.testPermission(player, PermissionNodes.TOWNY_COMMAND_TOWN_TRUST.getNode()))
+						throw new TownyException(Translation.of("msg_err_command_disable"));
+					
+					parseTownTrustCommand(player, StringMgmt.remFirstArg(split), null);
+					
 				} else if (TownyCommandAddonAPI.hasCommand(CommandType.TOWN, split[0])) {
 					TownyCommandAddonAPI.getAddonCommand(CommandType.TOWN, split[0]).execute(player, "town", split);
 				} else {
@@ -4074,6 +4088,58 @@ public class TownCommand extends BaseCommand implements CommandExecutor {
 			TownyMessaging.sendMessage(player, TownyFormatter.getFormattedOutlaws(town));
 		else 
 			TownyMessaging.sendErrorMsg(player, Translation.of("msg_specify_name"));
+	}
+	
+	public static void parseTownTrustCommand(Player player, String[] args, @Nullable Town town) {
+		if (args.length < 2) {
+			HelpMenu.TOWN_TRUST_HELP.send(player);
+			return;
+		}
+		
+		if (town == null)
+			town = TownyAPI.getInstance().getResident(player.getName()).getTownOrNull();
+		
+		if (town == null) {
+			TownyMessaging.sendErrorMsg(player, Translation.of("msg_err_resident_doesnt_belong_to_any_town"));
+			return;
+		}
+		
+		Resident resident = TownyAPI.getInstance().getResident(args[1]);
+		if (resident == null || resident.isNPC()) {
+			TownyMessaging.sendErrorMsg(player, Translation.of("msg_err_not_registered_1", args[1]));
+			return;
+		}
+		
+		if (args[0].equalsIgnoreCase("add")) {			
+			try {
+				town.addTrustedResident(resident);
+				plugin.deleteCache(resident.getName());
+			} catch (AlreadyRegisteredException ignored) {
+				TownyMessaging.sendErrorMsg(player, Translation.of("msg_already_trusted", resident.getName(), Translation.of("town_sing")));
+				return;
+			}
+			
+			TownyMessaging.sendMsg(player, Translation.of("msg_trusted_added", resident.getName(), Translation.of("town_sing")));
+			if (BukkitTools.isOnline(resident.getName()))
+				TownyMessaging.sendMsg(resident, Translation.of("msg_trusted_added_2", player.getName(), Translation.of("town_sing"), town.getName()));
+		} else if (args[0].equalsIgnoreCase("remove")) {
+			if (!town.hasTrustedResident(resident)) {
+				TownyMessaging.sendErrorMsg(player, Translation.of("msg_not_trusted", resident.getName(), Translation.of("town_sing")));
+				return;
+			}
+			
+			town.removeTrustedResident(resident);
+			plugin.deleteCache(resident.getName());
+			
+			TownyMessaging.sendMsg(player, Translation.of("msg_trusted_removed", resident.getName(), Translation.of("town_sing")));
+			if (BukkitTools.isOnline(resident.getName()))
+				TownyMessaging.sendMsg(resident, Translation.of("msg_trusted_removed_2", player.getName(), Translation.of("town_sing"), town.getName()));
+		} else {
+			TownyMessaging.sendErrorMsg(player, Translation.of("msg_err_invalid_property", args[0]));
+			return;
+		}
+		
+		town.save();
 	}
 
 	private static int homeBlockDistance(Town town1, Town town2) {

@@ -124,7 +124,8 @@ public class TownyAdminCommand extends BaseCommand implements CommandExecutor {
 		"outlaw",
 		"leavenation",
 		"invite",
-		"unruin"
+		"unruin",
+		"trust"
 	);
 
 	private static final List<String> adminNationTabCompletes = Arrays.asList(
@@ -158,7 +159,8 @@ public class TownyAdminCommand extends BaseCommand implements CommandExecutor {
 	private static final List<String> adminPlotTabCompletes = Arrays.asList(
 		"claim",
 		"meta",
-		"claimedat"
+		"claimedat",
+		"trust"
 	);
 	
 	private static final List<String> adminMetaTabCompletes = Arrays.asList(
@@ -270,6 +272,11 @@ public class TownyAdminCommand extends BaseCommand implements CommandExecutor {
 						case "meta":
 							if (args.length == 3)
 								return NameUtil.filterByStart(adminMetaTabCompletes, args[2]);
+						case "trust":
+							if (args.length == 3)
+								return NameUtil.filterByStart(Arrays.asList("add", "remove"), args[2]);
+							if (args.length == 4)
+								return getTownyStartingWith(args[3], "r");
 					}
 				}
 				break;
@@ -387,6 +394,11 @@ public class TownyAdminCommand extends BaseCommand implements CommandExecutor {
 								return NameUtil.filterByStart(adminMetaTabCompletes, args[3]);
 							}
 							break;
+						case "trust":
+							if (args.length == 4)
+								return NameUtil.filterByStart(Arrays.asList("add", "remove"), args[3]);
+							if (args.length == 5)
+								return getTownyStartingWith(args[4], "r");
 						default:
 							if (args.length == 3)
 								return NameUtil.filterByStart(adminTownTabCompletes, args[2]);
@@ -702,6 +714,11 @@ public class TownyAdminCommand extends BaseCommand implements CommandExecutor {
 				throw new NotRegisteredException();
 			
 			TownyMessaging.sendMsg(sender, Translation.of("msg_plot_perm_claimed_at", TownyFormatter.fullDateFormat.format(wc.getTownBlock().getClaimedAt())));
+		} else if (split[0].equalsIgnoreCase("trust")) {
+			if (!townyUniverse.getPermissionSource().testPermission(player, PermissionNodes.TOWNY_COMMAND_TOWNYADMIN_PLOT_TRUST.getNode()))
+				throw new TownyException(Translation.of("msg_err_command_disable"));
+			
+			PlotCommand.parsePlotTrustCommand(player, StringMgmt.remFirstArg(split));
 		}
 	}
 
@@ -1110,6 +1127,8 @@ public class TownyAdminCommand extends BaseCommand implements CommandExecutor {
 				TownRuinUtil.reclaimTown(town.getMayor(), town);
 				town.save();
 				
+			} else if (split[1].equalsIgnoreCase("trust")) {
+				TownCommand.parseTownTrustCommand(player, StringMgmt.remArgs(split, 2), town);
 			} else {
 				HelpMenu.TA_TOWN.send(sender);
 				return;

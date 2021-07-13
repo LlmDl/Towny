@@ -189,7 +189,7 @@ public class PlayerCache {
 	}
 
 	public enum TownBlockStatus {
-		UNKOWN, NOT_REGISTERED, OFF_WORLD, // In a world untouched by towny.
+		UNKNOWN, NOT_REGISTERED, OFF_WORLD, // In a world untouched by towny.
 		ADMIN,
 		UNCLAIMED_ZONE,
 		NATION_ZONE,
@@ -204,10 +204,13 @@ public class PlayerCache {
 		TOWN_RESIDENT,
 		TOWN_ALLY,
 		TOWN_NATION,
-		ENEMY
+		ENEMY,
+		TOWN_TRUSTED,
+		PLOT_TRUSTED,
+		@Deprecated UNKOWN,
 	}
 
-	private TownBlockStatus townBlockStatus = TownBlockStatus.UNKOWN;
+	private TownBlockStatus townBlockStatus = TownBlockStatus.UNKNOWN;
 
 	public void setStatus(TownBlockStatus townBlockStatus) {
 

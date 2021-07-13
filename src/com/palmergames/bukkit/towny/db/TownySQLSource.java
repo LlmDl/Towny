@@ -5,7 +5,9 @@
  */
 package com.palmergames.bukkit.towny.db;
 
+import com.google.gson.Gson;
 import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -14,6 +16,7 @@ import com.palmergames.bukkit.towny.exceptions.EmptyNationException;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.PermissionData;
 import com.palmergames.bukkit.towny.object.PlotGroup;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -1149,6 +1152,15 @@ public final class TownySQLSource extends TownyDatabaseHandler {
 				if (TownyUniverse.getInstance().hasJail(uuid))
 					town.setPrimaryJail(TownyUniverse.getInstance().getJail(uuid));
 			}
+			
+			line = rs.getString("trustedResidents");
+			if (line != null && !line.isEmpty()) {
+				search = (line.contains("#")) ? "#" : ",";
+				for (Resident resident : getResidents(toUUIDArray(line.split(search))))
+					try {
+						town.addTrustedResident(resident);
+					} catch (AlreadyRegisteredException ignored) {}
+			}
 
 			return true;
 		} catch (SQLException e) {
@@ -1774,6 +1786,35 @@ public final class TownySQLSource extends TownyDatabaseHandler {
 					}
 				} catch (SQLException ignored) {
 				}
+
+				line = rs.getString("trustedResidents");
+				if (line != null && !line.isEmpty()) {
+					String search = (line.contains("#")) ? "#" : ",";
+					for (Resident resident : getResidents(toUUIDArray(line.split(search)))) {
+						try {
+							townBlock.addTrustedResident(resident);
+						} catch (AlreadyRegisteredException ignored) {}
+					}
+				}
+				
+				line = rs.getString("customPermissionData");
+				if (line != null && !line.isEmpty()) {
+					Map<String, String> map = new Gson().fromJson(line, Map.class);
+
+					for (Map.Entry<String, String> entry : map.entrySet()) {
+						Resident resident;
+						try {
+							resident = TownyAPI.getInstance().getResident(UUID.fromString(entry.getKey()));
+						} catch (IllegalArgumentException e) {
+							continue;
+						}
+						
+						if (resident == null)
+							continue;
+
+						townBlock.getPermissionOverrides().put(resident, new PermissionData(entry.getValue()));
+					}
+				}
 			}
 
 		} catch (SQLException ex) {
@@ -2080,6 +2121,8 @@ public final class TownySQLSource extends TownyDatabaseHandler {
 			if (town.getPrimaryJail() != null)
 				twn_hm.put("primaryJail", town.getPrimaryJail().getUUID());
 			
+			twn_hm.put("trustedResidents", StringMgmt.join(toUUIDList(town.getTrustedResidents()), "#"));
+			
 			UpdateDB("TOWNS", twn_hm, Collections.singletonList("name"));
 			return true;
 
@@ -2294,6 +2337,15 @@ public final class TownySQLSource extends TownyDatabaseHandler {
 				tb_hm.put("metadata", serializeMetadata(townBlock));
 			else
 				tb_hm.put("metadata", "");
+			
+			tb_hm.put("trustedResidents", StringMgmt.join(toUUIDList(townBlock.getTrustedResidents()), "#"));
+
+			Map<String, String> stringMap = new HashMap<>();
+			for (Map.Entry<Resident, PermissionData> entry : townBlock.getPermissionOverrides().entrySet()) {
+				stringMap.put(entry.getKey().getUUID().toString(), entry.getValue().toString());
+			}
+			
+			tb_hm.put("customPermissionData", new Gson().toJson(stringMap));
 
 			UpdateDB("TOWNBLOCKS", tb_hm, Arrays.asList("world", "x", "z"));
 
